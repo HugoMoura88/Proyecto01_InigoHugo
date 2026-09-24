@@ -19,7 +19,7 @@ public class LibroDAO implements GenericDAO<Libro>{
 
     @Override
     public boolean insertar(Libro objeto) {
-        String sql = "INSERT INTO sibros (idlibros,titulo,autor,precio,stock) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO libros (idlibros,titulo,autor,precio,stock) VALUES (?, ?, ?, ?, ?)";
         try (Connection con = mysqlconnect.conectar();
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, objeto.getId());
@@ -69,14 +69,21 @@ public class LibroDAO implements GenericDAO<Libro>{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    @Override
-    public boolean actualizar(Libro objeto) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
-    @Override
-    public boolean eliminar(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean eliminar(String titulo) {
+        String sql = "DELETE FROM libros WHERE titulo = ?";
+
+        try (Connection con = mysqlconnect.conectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, titulo);
+            return ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            System.out.println("Error al eliminar: " + e.getMessage());
+        }
+
+        return false;
     }
     
     

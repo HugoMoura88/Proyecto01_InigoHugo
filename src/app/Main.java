@@ -9,5 +9,11 @@ package app;
  * @author 2DAM
  */
 public class Main {
+
+    public static void main(String[] args) {
+        
+        Funciones.mostrarTodosLosLibros();
+        
+    }
     
 }

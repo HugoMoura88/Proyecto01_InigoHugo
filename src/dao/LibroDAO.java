@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 import modelo.Libro;
 import java.sql.*;
+import java.util.ArrayList;
 import util.mysqlconnect;
 
 /**
@@ -45,7 +46,22 @@ public class LibroDAO implements GenericDAO<Libro>{
 
     @Override
     public List<Libro> obtenerTodos() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        List<Libro> libros = new ArrayList<>();
+		String sql = "SELECT * FROM libros";
+
+        try (Connection con = mysqlconnect.conectar();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                libros.add(mapear(rs));
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al obtener todos: " + e.getMessage());
+        }
+
+        return libros;
     }
 
     @Override

@@ -9,11 +9,11 @@ import java.util.List;
 /**
  *
  * @author 2DAM
+ * @param <T>
  */
 public interface GenericDAO<T> {
     
         boolean insertar(T objeto);
 	List<T> obtenerTodos();
-	T obtenerPorId(int id);
     
 }

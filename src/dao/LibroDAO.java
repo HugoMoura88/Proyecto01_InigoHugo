@@ -64,11 +64,6 @@ public class LibroDAO implements GenericDAO<Libro>{
         return libros;
     }
 
-    @Override
-    public Libro obtenerPorId(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
 
     public boolean eliminarPorTitulo(String titulo) {
         String sql = "DELETE FROM libros WHERE titulo = ?";
@@ -100,7 +95,64 @@ public class LibroDAO implements GenericDAO<Libro>{
 
         return false;
     }
+    public Libro obtenerPorMinimoDeStock(int Stock ) {
+		 String sql = "SELECT * from libros WHERE stock >= ? ;";
+	        try (Connection con = mysqlconnect.conectar();
+	             PreparedStatement ps = con.prepareStatement(sql)) {
+	            ps.setInt(1, Stock);
+	            ResultSet rs = ps.executeQuery();
+	            if (rs.next()) {
+	                return mapear(rs);
+	            }
+	        } catch (SQLException e) {
+	            System.out.println("Error al obtener por id: " + e.getMessage());
+	        }
+	        return null;
+	}
     
+    public Libro obtenerPorRangoPrecio(Double precio1,Double precio2) {
+		 String sql = "SELECT idlibros,titulo,autor,precio,stock FROM libros WHERE precio between ? and ?";
+	        try (Connection con = mysqlconnect.conectar();
+	            PreparedStatement ps = con.prepareStatement(sql)) {
+	            ps.setDouble(1, precio1);
+                    ps.setDouble(2, precio1);
+	            ResultSet rs = ps.executeQuery();
+	            if (rs.next()) {
+	                return mapear(rs);
+	            }
+	        } catch (SQLException e) {
+	            System.out.println("Error al obtener por id: " + e.getMessage());
+	        }
+	        return null;
+	}
+    public Libro obtenerPorTitulo(String titulo) {
+		 String sql = "SELECT idlibros,titulo,autor,precio,stock FROM libros WHERE titulo = ?";
+	        try (Connection con = mysqlconnect.conectar();
+	             PreparedStatement ps = con.prepareStatement(sql)) {
+	            ps.setString(1, titulo);
+	            ResultSet rs = ps.executeQuery();
+	            if (rs.next()) {
+	                return mapear(rs);
+	            }
+	        } catch (SQLException e) {
+	            System.out.println("Error al obtener por id: " + e.getMessage());
+	        }
+	        return null;
+	}
+    public Libro obtenerPorAutor(String autor) {
+		 String sql = "SELECT idlibros,titulo,autor,precio,stock FROM libros WHERE autor = ?";
+	        try (Connection con = mysqlconnect.conectar();
+	             PreparedStatement ps = con.prepareStatement(sql)) {
+	            ps.setString(1, autor);
+	            ResultSet rs = ps.executeQuery();
+	            if (rs.next()) {
+	                return mapear(rs);
+	            }
+	        } catch (SQLException e) {
+	            System.out.println("Error al obtener por id: " + e.getMessage());
+	        }
+	        return null;
+	}
     
     private Libro mapear(ResultSet rs) throws SQLException {
 	Libro objeto = new Libro();

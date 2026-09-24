@@ -25,6 +25,45 @@ public class Funciones {
             
         }
     }
+ //2. Buscar libro por título: permite buscar un libro específico por su título.
+    public static void buscarPorTitulo() {
+        Scanner sc = new Scanner(System.in);
+        LibroDAO dao = new LibroDAO();
+        System.out.println("Titulo: ");
+        String titulo = sc.next();
+        System.out.println(dao.obtenerPorTitulo(titulo));
+        
+    }
+ //3. Buscar libros por autor: permite buscar libros de un autor específico.
+    public static void buscarPorAutor() {
+        Scanner sc = new Scanner(System.in);
+        LibroDAO dao = new LibroDAO();
+        System.out.println("Autor: ");
+        String autor = sc.next();
+        System.out.println(dao.obtenerPorAutor(autor));
+        
+    }
+//4. Buscar libros por rango de precios: permite buscar libros dentro de un rango de precios indicado por el usuario.
+    public static void buscarPorRangoPrecios() {
+        Scanner sc = new Scanner(System.in);
+        LibroDAO dao = new LibroDAO();
+        System.out.println("Rango de precios: ");
+        System.out.println("De: ");
+        Double precio1 = Double.valueOf(sc.next());
+        System.out.println("Hasta: ");
+        Double precio2 = Double.valueOf(sc.next());
+        System.out.println(dao.obtenerPorRangoPrecio(precio1, precio2));
+    }
+//5. Buscar libros por cantidad mínima en stock: permite buscar libros con stock igual o mayor al especificado.
+    public static void buscarPorStockMinimo() {
+        Scanner sc = new Scanner(System.in);
+        LibroDAO dao = new LibroDAO();
+        System.out.println("Stock minimo: ");
+        int stock = Integer.parseInt(sc.next());
+        Double precio2 = Double.valueOf(sc.next());
+        System.out.println(dao.obtenerPorMinimoDeStock(stock));
+        
+    }
 //6. Insertar nuevo libro: el usuario proporcionará id, título, autor, precio y stock del nuevo libro.
     public static void insertarLibros() {
         LibroDAO dao = new LibroDAO();

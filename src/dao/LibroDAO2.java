@@ -17,6 +17,28 @@ import util.mysqlconnect;
  */
 public class LibroDAO2 implements GenericDAO<Libro>{
 
+      public Libro obtenerPorMinimoDeStock(int Stock ) {
+		 String sql = "SELECT * from libros WHERE stock >= ? ;";
+
+	        try (Connection con = mysqlconnect.conectar();
+	             PreparedStatement ps = con.prepareStatement(sql)) {
+
+	            ps.setInt(1, Stock);
+                    
+
+	            ResultSet rs = ps.executeQuery();
+
+	            if (rs.next()) {
+	                return mapear(rs);
+	            }
+
+	        } catch (SQLException e) {
+	            System.out.println("Error al obtener por id: " + e.getMessage());
+	        }
+
+	        return null;
+
+	}
      public Libro obtenerPorRangoPrecio(Double precio1,Double precio2) {
 		 String sql = "SELECT idlibros,titulo,autor,precio,stock FROM libros WHERE precio between ? and ?";
 

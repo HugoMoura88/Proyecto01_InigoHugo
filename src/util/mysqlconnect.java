@@ -1,9 +1,7 @@
 
-package etc;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+package util;
 import io.github.cdimascio.dotenv.Dotenv;
+import java.sql.*;
 
 /**
  *
@@ -19,5 +17,7 @@ public class mysqlconnect {
         String pass = env.get("DB_PASS");
 
         return DriverManager.getConnection(url, user, pass);
+        
     }
+   
 }

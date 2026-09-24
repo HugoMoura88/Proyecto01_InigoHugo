@@ -1,5 +1,5 @@
-
 package app;
+/*package app;*/
 
 
 import java.util.Scanner;
@@ -8,6 +8,7 @@ import java.util.Scanner;
  *
  * @author 2DAM
  */
+public class Main {
 public static void main(String[] args)  {
     
     Scanner sc = new Scanner(System.in);
@@ -27,7 +28,7 @@ public static void main(String[] args)  {
 		int numero = Integer.parseInt(ejercicio);
 		switch (numero) {
 		case 1:
-			break;
+			Funciones.mostrarTodosLosLibros();
 		case 2:
 			break;
 		case 3:
@@ -37,9 +38,9 @@ public static void main(String[] args)  {
 		case 5:
 			break;
 		case 6:
-			break;
+			Funciones.insertarLibros();
 		case 7:
-			break;
+			Funciones.eliminarLibro();
 		case 8:
 			break;
 
@@ -50,6 +51,4 @@ public static void main(String[] args)  {
 
 	}
 
-
-
-    
+} 

@@ -17,6 +17,7 @@ import modelo.Libro;
 public class Funciones {
 //1. Mostrar todos los libros: mostrará por pantalla todos los libros disponibles en el sistema.
     public static void mostrarTodosLosLibros() {
+        System.out.println("Libros:");
         LibroDAO dao = new LibroDAO();
         List<Libro> libros = dao.obtenerTodos();
         for (Libro libro : libros) {
@@ -65,21 +66,7 @@ public class Funciones {
         } else {
             System.out.println(dao.eliminarPorTitulo(titulo));
         }
+            }
         
-    }
-            
-            
-            
-            
-            
-    }
-        
-    
-    
-    
-    
-    
-    
-    
-    
-}
+//8. Hacer copia: copia todos los datos del repositorio activo al otro (de archivo a MySQL o viceversa).      
+    }       

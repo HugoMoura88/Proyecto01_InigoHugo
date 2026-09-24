@@ -14,33 +14,38 @@ public static void main(String[] args)  {
     Scanner sc = new Scanner(System.in);
    
 		System.out.println("""
-				=======================================
-
-				               MENU
-				     1. Ej 1          2. Ej 2
-				     3. Ej 3          4. Ej 4
-				     5. Ej 5          6. Ej 6
-				     7. Ej 7          8. Ej 8
-
-				======================================""");
-		System.out.println("Dime numero de ejercicio:");
-		String ejercicio = sc.nextLine();
+				============================================================
+				               ------------MENU-----------
+				1. Todos los libros          2. Buscar por titulo
+				3. Buscar por autor          4. Buscar por rango de precios
+				5. Buscar por stock minimo   6. Insertar libro
+				7. Borrar libro          
+				============================================================""");
+		System.out.println("Opcion: ");
+		String ejercicio = sc.next();
 		int numero = Integer.parseInt(ejercicio);
 		switch (numero) {
 		case 1:
 			Funciones.mostrarTodosLosLibros();
+                        break;
 		case 2:
 			Funciones.buscarPorTitulo();
+                        break;
 		case 3:
 			Funciones.buscarPorAutor();
+                        break;
 		case 4:
 			Funciones.buscarPorRangoPrecios();
+                        break;
 		case 5:
 			Funciones.buscarPorStockMinimo();
+                        break;
 		case 6:
 			Funciones.insertarLibros();
+                        break;
 		case 7:
 			Funciones.eliminarLibro();
+                        break;
 		case 8:
 			break;
 

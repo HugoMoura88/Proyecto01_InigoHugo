@@ -95,36 +95,6 @@ public class LibroDAO implements GenericDAO<Libro>{
 
         return false;
     }
-    public Libro obtenerPorMinimoDeStock(int Stock ) {
-		 String sql = "SELECT * from libros WHERE stock >= ? ;";
-	        try (Connection con = mysqlconnect.conectar();
-	             PreparedStatement ps = con.prepareStatement(sql)) {
-	            ps.setInt(1, Stock);
-	            ResultSet rs = ps.executeQuery();
-	            if (rs.next()) {
-	                return mapear(rs);
-	            }
-	        } catch (SQLException e) {
-	            System.out.println("Error al obtener por id: " + e.getMessage());
-	        }
-	        return null;
-	}
-    
-    public Libro obtenerPorRangoPrecio(Double precio1,Double precio2) {
-		 String sql = "SELECT idlibros,titulo,autor,precio,stock FROM libros WHERE precio between ? and ?";
-	        try (Connection con = mysqlconnect.conectar();
-	            PreparedStatement ps = con.prepareStatement(sql)) {
-	            ps.setDouble(1, precio1);
-                    ps.setDouble(2, precio1);
-	            ResultSet rs = ps.executeQuery();
-	            if (rs.next()) {
-	                return mapear(rs);
-	            }
-	        } catch (SQLException e) {
-	            System.out.println("Error al obtener por id: " + e.getMessage());
-	        }
-	        return null;
-	}
     public Libro obtenerPorTitulo(String titulo) {
 		 String sql = "SELECT idlibros,titulo,autor,precio,stock FROM libros WHERE titulo = ?";
 	        try (Connection con = mysqlconnect.conectar();

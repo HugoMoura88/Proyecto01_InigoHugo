@@ -47,21 +47,30 @@ public class Funciones {
     public static void buscarPorRangoPrecios() {
         Scanner sc = new Scanner(System.in);
         LibroDAO dao = new LibroDAO();
+        List<Libro> libros = dao.obtenerTodos();
         System.out.println("Rango de precios: ");
         System.out.println("De: ");
         Double precio1 = Double.valueOf(sc.next());
         System.out.println("Hasta: ");
         Double precio2 = Double.valueOf(sc.next());
-        System.out.println(dao.obtenerPorRangoPrecio(precio1, precio2));
+        for (Libro libro : libros) {
+            if (libro.getPrecio()>precio1&&libro.getPrecio()<precio2){
+                System.out.println(libro);
+            }
+        }
     }
 //5. Buscar libros por cantidad mínima en stock: permite buscar libros con stock igual o mayor al especificado.
     public static void buscarPorStockMinimo() {
         Scanner sc = new Scanner(System.in);
         LibroDAO dao = new LibroDAO();
+        List<Libro> libros = dao.obtenerTodos();
         System.out.println("Stock minimo: ");
         int stock = Integer.parseInt(sc.next());
-        Double precio2 = Double.valueOf(sc.next());
-        System.out.println(dao.obtenerPorMinimoDeStock(stock));
+        for (Libro libro : libros) {
+            if (libro.getStock()>=stock ){
+                System.out.println(libro);
+            }
+        }
         
     }
 //6. Insertar nuevo libro: el usuario proporcionará id, título, autor, precio y stock del nuevo libro.

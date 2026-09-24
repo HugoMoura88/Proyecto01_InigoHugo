@@ -15,6 +15,18 @@ public class Libro {
     protected double precio;
     protected int stock;
 
+    public Libro() {
+    }
+
+    public Libro(String titulo, String autor, double precio, int stock) {
+        this.titulo = titulo;
+        this.autor = autor;
+        this.precio = precio;
+        this.stock = stock;
+    }
+    
+    
+
     public Libro(String id, String titulo, String autor, double precio, int stock) {
         this.id = id;
         this.titulo = titulo;

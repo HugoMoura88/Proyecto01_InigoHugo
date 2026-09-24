@@ -17,6 +17,49 @@ import util.mysqlconnect;
  */
 public class LibroDAO2 implements GenericDAO<Libro>{
 
+    
+    
+    
+    public Libro obtenerPorTitulo(String titulo) {
+		 String sql = "SELECT idlibros,titulo,autor,precio,stock, FROM libros WHERE titulo = ?";
+
+	        try (Connection con = mysqlconnect.conectar();
+	             PreparedStatement ps = con.prepareStatement(sql)) {
+
+	            ps.setString(1, titulo);
+	            ResultSet rs = ps.executeQuery();
+
+	            if (rs.next()) {
+	                return mapear(rs);
+	            }
+
+	        } catch (SQLException e) {
+	            System.out.println("Error al obtener por id: " + e.getMessage());
+	        }
+
+	        return null;
+
+	}
+     public Libro obtenerPorAutor(String autor) {
+		 String sql = "SELECT idlibros,titulo,autor,precio,stock, FROM libros WHERE autor = ?";
+
+	        try (Connection con = mysqlconnect.conectar();
+	             PreparedStatement ps = con.prepareStatement(sql)) {
+
+	            ps.setString(1, autor);
+	            ResultSet rs = ps.executeQuery();
+
+	            if (rs.next()) {
+	                return mapear(rs);
+	            }
+
+	        } catch (SQLException e) {
+	            System.out.println("Error al obtener por id: " + e.getMessage());
+	        }
+
+	        return null;
+
+	}
     @Override
     public boolean insertar(Libro objeto) {
         String sql = "INSERT INTO sibros (idlibros,titulo,autor,precio,stock) VALUES (?, ?, ?, ?, ?)";

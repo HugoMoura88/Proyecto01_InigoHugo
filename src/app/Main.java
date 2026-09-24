@@ -30,13 +30,13 @@ public static void main(String[] args)  {
 		case 1:
 			Funciones.mostrarTodosLosLibros();
 		case 2:
-			break;
+			Funciones.buscarPorTitulo();
 		case 3:
-			break;
+			Funciones.buscarPorAutor();
 		case 4:
-			break;
+			Funciones.buscarPorRangoPrecios();
 		case 5:
-			break;
+			Funciones.buscarPorStockMinimo();
 		case 6:
 			Funciones.insertarLibros();
 		case 7:

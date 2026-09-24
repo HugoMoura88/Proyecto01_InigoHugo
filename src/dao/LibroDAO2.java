@@ -17,11 +17,32 @@ import util.mysqlconnect;
  */
 public class LibroDAO2 implements GenericDAO<Libro>{
 
-    
+     public Libro obtenerPorRangoPrecio(Double precio1,Double precio2) {
+		 String sql = "SELECT idlibros,titulo,autor,precio,stock FROM libros WHERE precio between ? and ?";
+
+	        try (Connection con = mysqlconnect.conectar();
+	             PreparedStatement ps = con.prepareStatement(sql)) {
+
+	            ps.setDouble(1, precio1);
+                    ps.setDouble(2, precio1);
+
+	            ResultSet rs = ps.executeQuery();
+
+	            if (rs.next()) {
+	                return mapear(rs);
+	            }
+
+	        } catch (SQLException e) {
+	            System.out.println("Error al obtener por id: " + e.getMessage());
+	        }
+
+	        return null;
+
+	}
     
     
     public Libro obtenerPorTitulo(String titulo) {
-		 String sql = "SELECT idlibros,titulo,autor,precio,stock, FROM libros WHERE titulo = ?";
+		 String sql = "SELECT idlibros,titulo,autor,precio,stock FROM libros WHERE titulo = ?";
 
 	        try (Connection con = mysqlconnect.conectar();
 	             PreparedStatement ps = con.prepareStatement(sql)) {
@@ -41,7 +62,7 @@ public class LibroDAO2 implements GenericDAO<Libro>{
 
 	}
      public Libro obtenerPorAutor(String autor) {
-		 String sql = "SELECT idlibros,titulo,autor,precio,stock, FROM libros WHERE autor = ?";
+		 String sql = "SELECT idlibros,titulo,autor,precio,stock FROM libros WHERE autor = ?";
 
 	        try (Connection con = mysqlconnect.conectar();
 	             PreparedStatement ps = con.prepareStatement(sql)) {

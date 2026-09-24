@@ -70,13 +70,28 @@ public class LibroDAO implements GenericDAO<Libro>{
     }
 
 
-    public boolean eliminar(String titulo) {
+    public boolean eliminarPorTitulo(String titulo) {
         String sql = "DELETE FROM libros WHERE titulo = ?";
 
         try (Connection con = mysqlconnect.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setString(1, titulo);
+            return ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            System.out.println("Error al eliminar: " + e.getMessage());
+        }
+
+        return false;
+    }
+    public boolean eliminarPorId(String id) {
+        String sql = "DELETE FROM libros WHERE idlibros = ?";
+
+        try (Connection con = mysqlconnect.conectar();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, id);
             return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {

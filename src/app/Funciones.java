@@ -41,7 +41,36 @@ public class Funciones {
         int stock = Integer.parseInt(sc.next());
         Libro libro = new Libro(id,titulo,autor,precio,stock);
         System.out.println(dao.insertar(libro));
+    }
         
+//7. Eliminar libro por título: elimina un libro por su título. Si hay varios con el mismo título, el usuario elige por id.
+            public static void eliminarLibro() {
+        LibroDAO dao = new LibroDAO();
+        List<Libro> libros = dao.obtenerTodos();
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Eliminar libro: ");
+        System.out.println("Titulo: ");
+        String titulo = sc.next();
+        int con = 0;
+        for (Libro libro : libros) {
+            if (libro.getTitulo().equals(titulo)){
+                System.out.println(libro);
+                con++;
+            }
+        }
+        if (con>1){
+            System.out.println("Hay varios libros con ese titulo, escribe la id del que quieres eliminar: ");
+            String id = sc.next();
+            System.out.println(dao.eliminarPorId(id));
+        } else {
+            System.out.println(dao.eliminarPorTitulo(titulo));
+        }
+        
+    }
+            
+            
+            
+            
             
     }
         

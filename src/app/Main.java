@@ -12,9 +12,7 @@ import java.util.Scanner;
     public class Main {
 
         public static void main(String[] args) {
-
-            menuMySQL();
-
+            String csv = "";
             Scanner scanner = new Scanner(System.in);
             System.out.println("""
                              ============================================================
@@ -26,11 +24,11 @@ import java.util.Scanner;
             switch (opcion) {
 
                 case 1:
-                    menuCSV();
+                    menuCSV(csv);
                     break;
 
                 case 2:
-                    menuMySQL();
+                    menu(csv);
                     break;
 
                 default:
@@ -39,17 +37,18 @@ import java.util.Scanner;
         }
     }
 
-    public static void mainn() {
+    public static void menuCSV(String csv) {
              Scanner scanner = new Scanner(System.in);
             
              System.out.println("Dime la ruta -> ");
-             String ruta = scanner.nextLine();
-             ruta=ruta.replace("\\","/");
-            
+             csv= scanner.nextLine();
+             csv=csv.replace("\\","/");
+             menu(csv)
+     
               
     }
 
-    public static void menuMySQL() {
+    public static void menu(String csv) {
         Scanner sc = new Scanner(System.in);
 
         System.out.println("""
@@ -65,25 +64,25 @@ import java.util.Scanner;
         int numero = Integer.parseInt(ejercicio);
         switch (numero) {
             case 1:
-                Funciones.mostrarTodosLosLibros();
+                Funciones.mostrarTodosLosLibros(csv);
                 break;
             case 2:
-                Funciones.buscarPorTitulo();
+                Funciones.buscarPorTitulo(csv);
                 break;
             case 3:
-                Funciones.buscarPorAutor();
+                Funciones.buscarPorAutor(csv);
                 break;
             case 4:
-                Funciones.buscarPorRangoPrecios();
+                Funciones.buscarPorRangoPrecios(csv);
                 break;
             case 5:
-                Funciones.buscarPorStockMinimo();
+                Funciones.buscarPorStockMinimo(csv);
                 break;
             case 6:
-                Funciones.insertarLibros();
+                Funciones.insertarLibros(csv);
                 break;
             case 7:
-                Funciones.eliminarLibro();
+                Funciones.eliminarLibro(csv);
                 break;
             case 8:
                 break;

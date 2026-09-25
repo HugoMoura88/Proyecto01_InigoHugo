@@ -5,6 +5,8 @@
 package util;
 
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -22,6 +24,7 @@ public class FromToTxt {
         List<String> lineas = new ArrayList<String>();
         try {
             leer = new Scanner(new FileReader(txt));
+            leer.nextLine();
             while (leer.hasNext()) {
                 lineas.add(leer.nextLine());
             }
@@ -79,6 +82,37 @@ public class FromToTxt {
         }
         return ret;
     }
+     
+     public static void insertarNuevoLibro(String txt,Libro objeto) {
+        List<Libro> libros = obtenerTodosTxt(txt);
+        PrintWriter es = null;
+        String linea = "";
+        Boolean esta = false;
+        try {
+            es = new PrintWriter(new FileWriter(txt));
+            es.println("idlibros,titulo,autor,precio,stock");
+            for (Libro libro : libros) {
+            es.println(libro.getId()+","+libro.getTitulo()+","+libro.getAutor()+","+libro.getPrecio()+","+libro.getStock());
+            if ( libro.getId().equals(objeto.getId())){
+                esta = true;
+            }
+            }
+            if (esta) {
+                System.out.println("Ya hay un libro con la misma id");
+            } else {
+                es.println(objeto.getId()+","+objeto.getTitulo()+","+objeto.getAutor()+","+objeto.getPrecio()+","+objeto.getStock());
+            }
+            
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		es.close();
+     }
+        
+    
+     
+     
+     
     
      
      

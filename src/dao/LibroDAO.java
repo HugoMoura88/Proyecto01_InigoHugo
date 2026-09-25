@@ -63,6 +63,45 @@ public class LibroDAO implements GenericDAO<Libro>{
 
         return libros;
     }
+    public boolean insertarDeCsv(Libro objeto, String tabla) {
+        String sql = "INSERT INTO ? (idlibros,titulo,autor,precio,stock) VALUES (?, ?, ?, ?, ?)";
+        try (Connection con = mysqlconnect.conectar();
+            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            ps.setString(1, tabla);
+            ps.setString(2, objeto.getId());
+            ps.setString(3, objeto.getTitulo());
+            ps.setString(4, objeto.getAutor());
+            ps.setDouble(5, objeto.getPrecio());
+            ps.setInt(6, objeto.getStock());
+            int filas = ps.executeUpdate();
+
+            if (filas > 0) {
+                ResultSet rs = ps.getGeneratedKeys();
+                if (rs.next()) {
+                    objeto.setId(rs.getString(1));
+                }
+                return true;
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al insertar: " + e.getMessage());
+        }
+
+        return false;
+    }
+    public void crearTabla(String nombre) {
+
+        String sql = "create table if not exist ? ( idlibros VARCHAR(255) PRIMARY KEY, titulo VARCHAR(255), autor VARCHAR(255), precio DOUBLE, stock INT)";
+
+        try (Connection con = mysqlconnect.conectar();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+  
+        } catch (SQLException e) {
+            System.out.println("Error al obtener todos: " + e.getMessage());
+        }
+    }
 
 
     public boolean eliminarPorTitulo(String titulo) {

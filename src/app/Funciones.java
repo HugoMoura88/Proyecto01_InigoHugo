@@ -41,12 +41,21 @@ public class Funciones {
     public static void buscarPorTitulo(String csv) {
         Scanner sc = new Scanner(System.in);
         LibroDAO dao = new LibroDAO();
+        List<Libro> libros = new ArrayList<Libro>();
         System.out.println("Titulo: ");
         String titulo = sc.next();
         if (csv.equals("")) {
-            System.out.println(dao.obtenerPorTitulo(titulo));
+            libros = dao.obtenerTodos();
+            for (Libro libro : libros) {
+                if (libro.getTitulo().equals(titulo)) {
+                    System.out.println(libro);
+                }
+            }
         } else {
-            System.out.println(util.FromToTxt.buscarPorTitulo(csv, titulo));
+             libros = util.FromToTxt.buscarPorTitulo(csv, titulo);
+            for (Libro libro : libros) {
+                System.out.println(libro);
+            }
         }
         System.out.println("Escribe l para volver al menu: ");
         sc.nextLine();
@@ -57,12 +66,21 @@ public class Funciones {
     public static void buscarPorAutor(String csv) {
         Scanner sc = new Scanner(System.in);
         LibroDAO dao = new LibroDAO();
+        List<Libro> libros = new ArrayList<Libro>();
         System.out.println("Autor: ");
         String autor = sc.next();
         if (csv.equals("")) {
-            System.out.println(dao.obtenerPorAutor(autor));
+            libros = dao.obtenerTodos();
+            for (Libro libro : libros) {
+                if (libro.getAutor().equals(autor)) {
+                    System.out.println(libro);
+                }
+            }
         } else {
-            System.out.println(util.FromToTxt.buscarPorAutor(csv, autor));
+            libros = util.FromToTxt.buscarPorAutor(csv, autor);
+            for (Libro libro : libros) {
+                System.out.println(libro);
+            }
         }
         System.out.println("Escribe l para volver al menu: ");
         sc.nextLine();
@@ -189,5 +207,31 @@ public class Funciones {
         Main.menu(csv);
     }
 
-//8. Hacer copia: copia todos los datos del repositorio activo al otro (de archivo a MySQL o viceversa).      
+//8. Hacer copia: copia todos los datos del repositorio activo al otro (de archivo a MySQL o viceversa).    
+     public static void copiar(String csv) {
+        Scanner sc = new Scanner(System.in);
+        List<Libro> libros = new ArrayList<Libro>();
+        LibroDAO dao = new LibroDAO();
+        String ncsv = "";
+        String nom = "";
+        if (csv.equals("")) {
+            libros = dao.obtenerTodos();
+            System.out.println("Dime la ruta en la que quieres crear el csv: -> ");
+            ncsv = sc.nextLine();
+            System.out.println("Dime el nombre que le quieres poner al csv: -> ");
+            ncsv = ncsv.concat("/"+sc.nextLine());
+            util.FromToTxt.toCSV(ncsv, libros);
+        } else {
+            libros = util.FromToTxt.obtenerTodosTxt(csv);
+            System.out.println("Dime el nombre que le quieres poner a la nueva tabla: -> ");
+            nom = sc.nextLine();
+            dao.crearTabla(nom);
+            for (Libro libro : libros) {
+                dao.insertarDeCsv(libro, nom);
+            }
+        }
+        System.out.println("Escribe l para volver al menu: ");
+        sc.nextLine();
+        Main.menu(csv);
+    }
 }

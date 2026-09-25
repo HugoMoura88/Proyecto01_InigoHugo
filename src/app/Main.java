@@ -58,7 +58,8 @@ public class Main {
                              1. Todos los libros          2. Buscar por titulo
                              3. Buscar por autor          4. Buscar por rango de precios
                              5. Buscar por stock minimo   6. Insertar libro
-                             7. Borrar libro
+                             7. Borrar libro              8. Copiar
+                             9. Salir
                              ============================================================""");
         System.out.println("Opcion: ");
         String ejercicio = sc.next();
@@ -86,8 +87,10 @@ public class Main {
                 Funciones.eliminarLibro(csv);
                 break;
             case 8:
+                Funciones.copiar(csv);
                 break;
-
+            case 9:
+                break;
             default:
                 throw new IllegalArgumentException("No exixste ese ejercicio");
 

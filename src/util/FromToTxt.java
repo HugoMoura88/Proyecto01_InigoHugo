@@ -18,12 +18,12 @@ import modelo.Libro;
  */
 public class FromToTxt {
 
-    public static List<Libro> obtenerTodosTxt(String txt) {
+    public static List<Libro> obtenerTodosTxt(String csv) {
         List<Libro> libros = new ArrayList<Libro>();
         Scanner leer = null;
         List<String> lineas = new ArrayList<String>();
         try {
-            leer = new Scanner(new FileReader(txt));
+            leer = new Scanner(new FileReader(csv));
             leer.nextLine();
             while (leer.hasNext()) {
                 lineas.add(leer.nextLine());
@@ -39,8 +39,8 @@ public class FromToTxt {
 
     }
 
-    public static List<Libro> buscarPorTitulo(String txt, String titulo) {
-        List<Libro> libros = obtenerTodosTxt(txt);
+    public static List<Libro> buscarPorTitulo(String csv, String titulo) {
+        List<Libro> libros = obtenerTodosTxt(csv);
         List<Libro> ret = new ArrayList<Libro>();
         for (Libro libro : libros) {
             if (libro.getTitulo().equals(titulo)) {
@@ -50,8 +50,8 @@ public class FromToTxt {
         return ret;
     }
 
-    public static List<Libro> buscarPorAutor(String txt, String autor) {
-        List<Libro> libros = obtenerTodosTxt(txt);
+    public static List<Libro> buscarPorAutor(String csv, String autor) {
+        List<Libro> libros = obtenerTodosTxt(csv);
         List<Libro> ret = new ArrayList<Libro>();
         for (Libro libro : libros) {
             if (libro.getAutor().equals(autor)) {
@@ -61,8 +61,8 @@ public class FromToTxt {
         return ret;
     }
 
-    public static List<Libro> buscarPorRangoPrecios(String txt, Double m, Double ma) {
-        List<Libro> libros = obtenerTodosTxt(txt);
+    public static List<Libro> buscarPorRangoPrecios(String csv, Double m, Double ma) {
+        List<Libro> libros = obtenerTodosTxt(csv);
         List<Libro> ret = new ArrayList<Libro>();
         for (Libro libro : libros) {
             if (libro.getPrecio() >= m || libro.getPrecio() < ma) {
@@ -72,8 +72,8 @@ public class FromToTxt {
         return ret;
     }
 
-    public static List<Libro> buscarPorStockMinimo(String txt, int stock) {
-        List<Libro> libros = obtenerTodosTxt(txt);
+    public static List<Libro> buscarPorStockMinimo(String csv, int stock) {
+        List<Libro> libros = obtenerTodosTxt(csv);
         List<Libro> ret = new ArrayList<Libro>();
         for (Libro libro : libros) {
             if (libro.getStock() >= stock) {
@@ -83,12 +83,12 @@ public class FromToTxt {
         return ret;
     }
 
-    public static void insertarNuevoLibro(String txt, Libro objeto) {
-        List<Libro> libros = obtenerTodosTxt(txt);
+    public static void insertarNuevoLibro(String csv, Libro objeto) {
+        List<Libro> libros = obtenerTodosTxt(csv);
         PrintWriter es = null;
         Boolean esta = false;
         try {
-            es = new PrintWriter(new FileWriter(txt));
+            es = new PrintWriter(new FileWriter(csv));
             es.println("idlibros,titulo,autor,precio,stock");
             for (Libro libro : libros) {
                 es.println(libro.getId() + "," + libro.getTitulo() + "," + libro.getAutor() + "," + libro.getPrecio() + "," + libro.getStock());
@@ -108,12 +108,12 @@ public class FromToTxt {
         es.close();
     }
 
-    public static void eliminarLibroPorTitulo(String txt, String titulo) {
-        List<Libro> libros = obtenerTodosTxt(txt);
+    public static void eliminarLibroPorTitulo(String csv, String titulo) {
+        List<Libro> libros = obtenerTodosTxt(csv);
         PrintWriter es = null;
         Boolean esta = false;
         try {
-            es = new PrintWriter(new FileWriter(txt));
+            es = new PrintWriter(new FileWriter(csv));
             es.println("idlibros,titulo,autor,precio,stock");
             for (Libro libro : libros) {
                 if (!(libro.getTitulo().equals(titulo))) {
@@ -125,12 +125,12 @@ public class FromToTxt {
         }
         es.close();
     }
-    public static void eliminarLibroPorId(String txt, String id) {
-        List<Libro> libros = obtenerTodosTxt(txt);
+    public static void eliminarLibroPorId(String csv, String id) {
+        List<Libro> libros = obtenerTodosTxt(csv);
         PrintWriter es = null;
         Boolean esta = false;
         try {
-            es = new PrintWriter(new FileWriter(txt));
+            es = new PrintWriter(new FileWriter(csv));
             es.println("idlibros,titulo,autor,precio,stock");
             for (Libro libro : libros) {
                 if (!(libro.getId().equals(id))) {
@@ -142,7 +142,21 @@ public class FromToTxt {
         }
         es.close();
     }
-    
+    public static void toCSV(String csv, List<Libro> libros) {
+        PrintWriter es = null;
+        csv = csv.replace("\\", "/");
+        csv = csv.replace("\"", "/");
+        try {
+            es = new PrintWriter(new FileWriter(csv));
+            es.println("idlibros,titulo,autor,precio,stock");
+            for (Libro libro : libros) {
+                es.println(libro.getId() + "," + libro.getTitulo() + "," + libro.getAutor() + "," + libro.getPrecio() + "," + libro.getStock());
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        es.close();
+    }
     
 
 }

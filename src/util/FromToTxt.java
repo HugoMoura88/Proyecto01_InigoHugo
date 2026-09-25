@@ -33,7 +33,62 @@ public class FromToTxt {
             libros.add(new Libro(lineaSeparada[0],lineaSeparada[1],lineaSeparada[2],Double.valueOf(lineaSeparada[3]),Integer.parseInt(lineaSeparada[4])));
         }
         return libros;
+        
     }
+    
+    public static List<Libro> buscarPorTitulo(String txt,String titulo) {
+        List<Libro> libros = obtenerTodosTxt(txt);
+        List<Libro> ret = new ArrayList<Libro>();
+        for (Libro libro : libros) {
+            if (libro.getTitulo().equals(titulo)) {
+                ret.add(libro);
+            }
+        }
+        return ret;
+    }
+    
+    public static List<Libro> buscarPorAutor(String txt,String autor) {
+        List<Libro> libros = obtenerTodosTxt(txt);
+        List<Libro> ret = new ArrayList<Libro>();
+        for (Libro libro : libros) {
+            if (libro.getAutor().equals(autor)) {
+                ret.add(libro);
+            }
+        }
+        return ret;
+    }
+    
+     public static List<Libro> buscarPorRangoPrecios(String txt,Double m, Double ma) {
+        List<Libro> libros = obtenerTodosTxt(txt);
+        List<Libro> ret = new ArrayList<Libro>();
+        for (Libro libro : libros) {
+            if (libro.getPrecio() >= m ||libro.getPrecio() < ma) {
+                ret.add(libro);
+            }
+        }
+        return ret;
+    }
+     
+     public static List<Libro> buscarPorStockMinimo(String txt,int stock) {
+        List<Libro> libros = obtenerTodosTxt(txt);
+        List<Libro> ret = new ArrayList<Libro>();
+        for (Libro libro : libros) {
+            if (libro.getStock()>= stock) {
+                ret.add(libro);
+            }
+        }
+        return ret;
+    }
+    
+     
+     
+     
+    
+    
+    
+    
+    
+   
     
     
     

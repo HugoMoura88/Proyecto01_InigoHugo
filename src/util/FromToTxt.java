@@ -6,6 +6,7 @@ package util;
 
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import modelo.Libro;
 
@@ -15,10 +16,10 @@ import modelo.Libro;
  */
 public class FromToTxt {
     
-    public return List<Libro> void obtenerTodosTxt(String txt) {
-        ArrayList<Libro> libros = new ArrayList<Libro>();
+    public static List<Libro> obtenerTodosTxt(String txt) {
+        List<Libro> libros = new ArrayList<Libro>();
         Scanner leer = null;
-        ArrayList<String> lineas = new ArrayList<String>();
+        List<String> lineas = new ArrayList<String>();
         try {
             leer = new Scanner(new FileReader(txt));
             while (leer.hasNext()) {

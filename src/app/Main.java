@@ -1,18 +1,19 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package app;
 
-/*package app;*/
 import java.util.Scanner;
 
 /**
  *
  * @author 2DAM
  */
-  
-
-    public class Main {
-
-        public static void main(String[] args) {
-            String csv = "";
+public class Main {
+    
+    public static void main(String[] args) {
+        String csv = "";
             Scanner scanner = new Scanner(System.in);
             System.out.println("""
                              ============================================================
@@ -35,20 +36,20 @@ import java.util.Scanner;
                     System.out.println("Opcion no valida");
             }
         }
-    }
-
     public static void menuCSV(String csv) {
-             Scanner scanner = new Scanner(System.in);
-            
-             System.out.println("Dime la ruta -> ");
-             csv= scanner.nextLine();
-             csv=csv.replace("\\","/");
-             menu(csv)
-     
-              
-    }
+        Scanner scanner = new Scanner(System.in);
 
-    public static void menu(String csv) {
+        System.out.println("Dime la ruta -> ");
+        csv = scanner.nextLine();
+        csv = csv.replace("\\", "/");
+        csv = csv.replace("\"", "/");
+        menu(csv);     
+    }
+        
+        
+        
+        
+     public static void menu(String csv) {
         Scanner sc = new Scanner(System.in);
 
         System.out.println("""
@@ -91,4 +92,6 @@ import java.util.Scanner;
                 throw new IllegalArgumentException("No exixste ese ejercicio");
 
         }
-    }
+    
+     }
+}

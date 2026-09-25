@@ -5,6 +5,7 @@
 package app;
 
 import dao.LibroDAO;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -18,6 +19,7 @@ public class Funciones {
 //1. Mostrar todos los libros: mostrará por pantalla todos los libros disponibles en el sistema.
 
     public static void mostrarTodosLosLibros(String csv) {
+        Scanner sc = new Scanner(System.in);
         System.out.println("Libros:");
         LibroDAO dao = new LibroDAO();
         List<Libro> libros = new ArrayList<Libro>();
@@ -30,8 +32,11 @@ public class Funciones {
             System.out.println(libro);
 
         }
+        System.out.println("Escribe l para volver al menu: ");
+        sc.nextLine();
+        Main.menu(csv);
     }
-    //2. Buscar libro por título: permite buscar un libro específico por su título.
+//2. Buscar libro por título: permite buscar un libro específico por su título.
 
     public static void buscarPorTitulo(String csv) {
         Scanner sc = new Scanner(System.in);
@@ -43,6 +48,9 @@ public class Funciones {
         } else {
             System.out.println(util.FromToTxt.buscarPorTitulo(csv, titulo));
         }
+        System.out.println("Escribe l para volver al menu: ");
+        sc.nextLine();
+        Main.menu(csv);
     }
     //3. Buscar libros por autor: permite buscar libros de un autor específico.
 
@@ -56,7 +64,9 @@ public class Funciones {
         } else {
             System.out.println(util.FromToTxt.buscarPorAutor(csv, autor));
         }
-
+        System.out.println("Escribe l para volver al menu: ");
+        sc.nextLine();
+        Main.menu(csv);
     }
 //4. Buscar libros por rango de precios: permite buscar libros dentro de un rango de precios indicado por el usuario.
 
@@ -82,7 +92,9 @@ public class Funciones {
                 System.out.println(libro);
             }
         }
-
+        System.out.println("Escribe l para volver al menu: ");
+        sc.nextLine();
+        Main.menu(csv);
     }
 //5. Buscar libros por cantidad mínima en stock: permite buscar libros con stock igual o mayor al especificado.
 
@@ -105,7 +117,9 @@ public class Funciones {
                 System.out.println(libro);
             }
         }
-
+        System.out.println("Escribe l para volver al menu: ");
+        sc.nextLine();
+        Main.menu(csv);
     }
 //6. Insertar nuevo libro: el usuario proporcionará id, título, autor, precio y stock del nuevo libro.
 
@@ -129,7 +143,9 @@ public class Funciones {
         } else {
             util.FromToTxt.insertarNuevoLibro(csv, libro);
         }
-
+        System.out.println("Escribe l para volver al menu: ");
+        sc.nextLine();
+        Main.menu(csv);
     }
 
 //7. Eliminar libro por título: elimina un libro por su título. Si hay varios con el mismo título, el usuario elige por id.
@@ -158,16 +174,19 @@ public class Funciones {
             if (csv.equals("")) {
                 System.out.println(dao.eliminarPorId(id));
             } else {
-                util.FromToTxt.eliminarLibroPorId(csv,id);
+                util.FromToTxt.eliminarLibroPorId(csv, id);
             }
         } else {
             if (csv.equals("")) {
                 System.out.println(dao.eliminarPorTitulo(titulo));
             } else {
-                util.FromToTxt.eliminarLibroPorTitulo(csv,titulo);
+                util.FromToTxt.eliminarLibroPorTitulo(csv, titulo);
             }
             
         }
+        System.out.println("Escribe l para volver al menu: ");
+        sc.nextLine();
+        Main.menu(csv);
     }
 
 //8. Hacer copia: copia todos los datos del repositorio activo al otro (de archivo a MySQL o viceversa).      

@@ -64,15 +64,14 @@ public class LibroDAO implements GenericDAO<Libro>{
         return libros;
     }
     public boolean insertarDeCsv(Libro objeto, String tabla) {
-        String sql = "INSERT INTO ? (idlibros,titulo,autor,precio,stock) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO "+tabla+" (idlibros,titulo,autor,precio,stock) VALUES (?, ?, ?, ?, ?)";
         try (Connection con = mysqlconnect.conectar();
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            ps.setString(1, tabla);
-            ps.setString(2, objeto.getId());
-            ps.setString(3, objeto.getTitulo());
-            ps.setString(4, objeto.getAutor());
-            ps.setDouble(5, objeto.getPrecio());
-            ps.setInt(6, objeto.getStock());
+            ps.setString(1, objeto.getId());
+            ps.setString(2, objeto.getTitulo());
+            ps.setString(3, objeto.getAutor());
+            ps.setDouble(4, objeto.getPrecio());
+            ps.setInt(5, objeto.getStock());
             int filas = ps.executeUpdate();
 
             if (filas > 0) {
@@ -90,18 +89,17 @@ public class LibroDAO implements GenericDAO<Libro>{
         return false;
     }
     public void crearTabla(String nombre) {
+    try (Connection con = mysqlconnect.conectar();
+         Statement ps = con.createStatement()) {
+        
+        String sql = "CREATE TABLE IF NOT EXISTS " + nombre + " ( idlibros VARCHAR(255) PRIMARY KEY, titulo VARCHAR(255), autor VARCHAR(255), precio DOUBLE, stock INT);";
+ 
+        ps.executeUpdate(sql);
 
-        String sql = "create table if not exist ? ( idlibros VARCHAR(255) PRIMARY KEY, titulo VARCHAR(255), autor VARCHAR(255), precio DOUBLE, stock INT)";
-
-        try (Connection con = mysqlconnect.conectar();
-             PreparedStatement ps = con.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-
-  
-        } catch (SQLException e) {
-            System.out.println("Error al obtener todos: " + e.getMessage());
-        }
+    } catch (SQLException ex) {
+        System.getLogger(LibroDAO.class.getName()).log(System.Logger.Level.ERROR, "Error al crear la tabla: " + nombre, ex);
     }
+}
 
 
     public boolean eliminarPorTitulo(String titulo) {

@@ -16,7 +16,7 @@ import modelo.Libro;
  *
  * @author 2DAM
  */
-public class FromToTxt {
+public class FromToCsv {
 
     public static List<Libro> obtenerTodosTxt(String csv) {
         List<Libro> libros = new ArrayList<Libro>();

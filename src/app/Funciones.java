@@ -26,7 +26,7 @@ public class Funciones {
         if (csv.equals("")) {
             libros = dao.obtenerTodos();
         } else {
-            libros = util.FromToTxt.obtenerTodosTxt(csv);
+            libros = util.FromToCsv.obtenerTodosTxt(csv);
         }
         for (Libro libro : libros) {
             System.out.println(libro);
@@ -52,7 +52,7 @@ public class Funciones {
                 }
             }
         } else {
-             libros = util.FromToTxt.buscarPorTitulo(csv, titulo);
+             libros = util.FromToCsv.buscarPorTitulo(csv, titulo);
             for (Libro libro : libros) {
                 System.out.println(libro);
             }
@@ -77,7 +77,7 @@ public class Funciones {
                 }
             }
         } else {
-            libros = util.FromToTxt.buscarPorAutor(csv, autor);
+            libros = util.FromToCsv.buscarPorAutor(csv, autor);
             for (Libro libro : libros) {
                 System.out.println(libro);
             }
@@ -105,7 +105,7 @@ public class Funciones {
                 }
             }
         } else {
-            libros = util.FromToTxt.buscarPorRangoPrecios(csv, precio1, precio2);
+            libros = util.FromToCsv.buscarPorRangoPrecios(csv, precio1, precio2);
             for (Libro libro : libros) {
                 System.out.println(libro);
             }
@@ -130,7 +130,7 @@ public class Funciones {
                 }
             }
         } else {
-            libros = util.FromToTxt.buscarPorStockMinimo(csv, stock);
+            libros = util.FromToCsv.buscarPorStockMinimo(csv, stock);
             for (Libro libro : libros) {
                 System.out.println(libro);
             }
@@ -159,7 +159,7 @@ public class Funciones {
         if (csv.equals("")) {
             System.out.println(dao.insertar(libro));
         } else {
-            util.FromToTxt.insertarNuevoLibro(csv, libro);
+            util.FromToCsv.insertarNuevoLibro(csv, libro);
         }
         System.out.println("Escribe l para volver al menu: ");
         sc.nextLine();
@@ -178,7 +178,7 @@ public class Funciones {
         if (csv.equals("")) {
             libros = dao.obtenerTodos();
         } else {
-            libros = util.FromToTxt.obtenerTodosTxt(csv);
+            libros = util.FromToCsv.obtenerTodosTxt(csv);
         }
         for (Libro libro : libros) {
             if (libro.getTitulo().equals(titulo)) {
@@ -192,13 +192,13 @@ public class Funciones {
             if (csv.equals("")) {
                 System.out.println(dao.eliminarPorId(id));
             } else {
-                util.FromToTxt.eliminarLibroPorId(csv, id);
+                util.FromToCsv.eliminarLibroPorId(csv, id);
             }
         } else {
             if (csv.equals("")) {
                 System.out.println(dao.eliminarPorTitulo(titulo));
             } else {
-                util.FromToTxt.eliminarLibroPorTitulo(csv, titulo);
+                util.FromToCsv.eliminarLibroPorTitulo(csv, titulo);
             }
             
         }
@@ -220,9 +220,9 @@ public class Funciones {
             ncsv = sc.nextLine();
             System.out.println("Dime el nombre que le quieres poner al csv: -> ");
             ncsv = ncsv.concat("/"+sc.nextLine());
-            util.FromToTxt.toCSV(ncsv, libros);
+            util.FromToCsv.toCSV(ncsv, libros);
         } else {
-            libros = util.FromToTxt.obtenerTodosTxt(csv);
+            libros = util.FromToCsv.obtenerTodosTxt(csv);
             System.out.println("Dime el nombre que le quieres poner a la nueva tabla: -> ");
             nom = sc.nextLine();
             dao.crearTabla(nom);

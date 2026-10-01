@@ -6,7 +6,8 @@ package modelo;
 
 /**
  * Esta clase representa un Libro con los atributos : id,titulo,autor,precio y 
- * stock
+ * stock.
+ * Cada libro se identifica de forma unica con su @id
  * @author InigoHugo
  * @version 1.0
  */

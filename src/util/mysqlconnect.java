@@ -7,7 +7,9 @@ import java.sql.*;
  * Clase encargada de realizar la conexión con la base de datos de MySQL 
  * utilizando los datos del archivo .env.
  * 
- * @author 2DAM
+ * @author InigoHugo
+ * @version 1.0
+
  */
 public class mysqlconnect {
    /**

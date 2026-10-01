@@ -9,7 +9,9 @@ import java.util.List;
 /**
  * Interfaz llamada genericDAO que implementaremos en el main de manera que 
  * tengamos estos metodos de manera obligatoria.
- * @author 2DAM
+ * @author InigoHugo
+ * @version 1.0
+
  * @param <T>
  */
 public interface GenericDAO<T> {

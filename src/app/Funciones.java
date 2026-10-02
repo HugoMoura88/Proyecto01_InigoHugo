@@ -49,7 +49,15 @@ public class Funciones {
         sc.nextLine();
         Main.menu(csv);
     }
-//2. Buscar libro por título: permite buscar un libro específico por su título.
+/**
+ * Este metodo se encargará de buscar un libro por su Titulo,le pedirá al usuario 
+ * el titulo del libro mediante un scanner 
+ * y recorrerá el arraylist de libros,si no es csv recorrerá el metodo 
+ * de obtenerTodos y si algun libro se llama como el indicado lo mostrará por pantalla.
+ * Si es por CSV llama al metodo buscarPorTitulo, lo recorre y lo imprime.
+ * 
+ * @param csv 
+ */
 
     public static void buscarPorTitulo(String csv) {
         Scanner sc = new Scanner(System.in);
@@ -74,7 +82,15 @@ public class Funciones {
         sc.nextLine();
         Main.menu(csv);
     }
-    //3. Buscar libros por autor: permite buscar libros de un autor específico.
+  /**
+   * Este metodo se encargará de buscar un libro por su autor, pedirá un autor 
+   * por consola y si no es csv ira al método dao.obtenertodos lo igualará 
+   * al ArrayList de libros hará un foreach 
+   * y de ahi llamaremos al metodo getAutor si ese autor coincide con alguno 
+   * mostrará el libro por pantalla.
+   * Si es por CSV llama al metodo buscarPorAutor, lo recorre y lo imprime.
+   * @param csv 
+   */
 
     public static void buscarPorAutor(String csv) {
         Scanner sc = new Scanner(System.in);
@@ -99,7 +115,13 @@ public class Funciones {
         sc.nextLine();
         Main.menu(csv);
     }
-//4. Buscar libros por rango de precios: permite buscar libros dentro de un rango de precios indicado por el usuario.
+    /**
+     * Este metodo se encarga de buscar por rango de precios pedirá dos por consola
+     * y sino es csv llamará al metodo dao.obtenertodos igualandoló al ArrayList de libros y 
+     * lo recorrera y si el precio esta entre esos rangos imprimirá el libro por pantalla.
+     * Si es por CSV llama al metodo buscarPorRangoPrecios, lo recorre y lo imprime.
+     * @param csv 
+     */
 
     public static void buscarPorRangoPrecios(String csv) {
         Scanner sc = new Scanner(System.in);
@@ -127,7 +149,14 @@ public class Funciones {
         sc.nextLine();
         Main.menu(csv);
     }
-//5. Buscar libros por cantidad mínima en stock: permite buscar libros con stock igual o mayor al especificado.
+    /**
+     * Este método se encargará de buscar libro por cantidad de Stock sino es csv 
+     * llamará al metodo de dao.obtenertodos y lo convertirá en el arraylist de 
+     * tipo libros y lo recorrerá con un foreach llamará getstock y si es mayor o
+     * igual al introducido por sacnner lo imprimrá.
+     * Si es por CSV llama al metodo buscarPorStockMinimo, lo recorre y lo imprime.
+     * @param csv 
+     */
 
     public static void buscarPorStockMinimo(String csv) {
         Scanner sc = new Scanner(System.in);

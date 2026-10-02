@@ -29,7 +29,7 @@ public class FromToCsv {
      * mediante un "FileReader", de cada linea que representara un libro
      * sacara cada atributo separado por una "," que es el separador estandar de un csv 
      * creando una lista de libros y añadiendo asi los libros extraidos de cada linea
-     * @param csv
+     * @param csv la ruta del csv
      * @return lista de todos los libros que contiene el csv
      */
 
@@ -63,8 +63,8 @@ public class FromToCsv {
      * todos los libros que coincidan con el titulo introducido, despues lo
      * devolvera
      * 
-     * @param csv
-     * @param titulo
+     * @param csv la ruta del csv
+     * @param titulo el titulo elegido por el usuario
      * @return lista de todos los libros que tengan el titulo introducido 
      */
     public static List<Libro> buscarPorTitulo(String csv, String titulo) {
@@ -86,8 +86,8 @@ public class FromToCsv {
      * en la lista libros y mediante un foreach añadira a la lista ret
      * todos los libros que coincidan con el autor introducido, despues lo
      * devolvera
-     * @param csv
-     * @param autor
+     * @param csv la ruta del csv
+     * @param autor el autor elegido por el usuario
      * @return lista de todos los libros que tengan el autor introducido introducido 
      */
     public static List<Libro> buscarPorAutor(String csv, String autor) {
@@ -108,9 +108,9 @@ public class FromToCsv {
      * en la lista libros y mediante un foreach añadira a la lista ret
      * todos los libros que esten entre m y ma, despues lo
      * devolvera
-     * @param csv
-     * @param m
-     * @param ma
+     * @param csv la ruta del csv
+     * @param m el minimo introducido por el usuario
+     * @param ma el maximo introducido por el usuario
      * @return lista de todos los libros cuyo precio este entre mayor a m y menor a ma
      */
     public static List<Libro> buscarPorRangoPrecios(String csv, Double m, Double ma) {
@@ -131,8 +131,8 @@ public class FromToCsv {
      * Llamara al metodo obtenerTodosTxt para obtener todos los libros del csv
      * en la lista libros y mediante un foreach añadira a la lista ret
      * todos los libros cuyo stock sea mayor al introducido
-     * @param csv
-     * @param stock
+     * @param csv la ruta del csv
+     * @param stock el estock minimo introducido por el usuario
      * @return lista de todos los libros cuyo stock sea mayor al introducido
      */
 
@@ -155,8 +155,8 @@ public class FromToCsv {
      * libros que ya tenia gracias al metodo obtenerTodosTxt junto al libro 
      * introducido, en el caso de que ya exista un libro con la misma id devolvera
      * un mensaje diciendo que ya existe un libro con esa id
-     * @param csv
-     * @param objeto 
+     * @param csv la ruta del csv
+     * @param objeto el libro introducido por el usuario
      */
 
     public static void insertarNuevoLibro(String csv, Libro objeto) {
@@ -192,8 +192,8 @@ public class FromToCsv {
      * libro que tenga el titulo introducido no lo escribira de nuevo haciendo 
      * asi que el csv reconstruido 
      * 
-     * @param csv
-     * @param titulo 
+     * @param csv la ruta del csv
+     * @param titulo el titulo introducido por el usuario
      */
     public static void eliminarLibroPorTitulo(String csv, String titulo) {
         List<Libro> libros = obtenerTodosTxt(csv);
@@ -221,10 +221,8 @@ public class FromToCsv {
      * libro que tenga el id introducido no lo escribira de nuevo haciendo 
      * asi que el csv reconstruido no lo contenga 
      * 
-     * @param csv
-     * @param titulo 
-     * @param csv
-     * @param id 
+     * @param csv la ruta del csv
+     * @param id la id elegido por el usuario
      */
     public static void eliminarLibroPorId(String csv, String id) {
         List<Libro> libros = obtenerTodosTxt(csv);
@@ -251,8 +249,8 @@ public class FromToCsv {
      * que sera el nuevo csv, de la ruta cambiara las barras en caso de tener contrabarras
      * en unas reconocibles y mediante un PrintWriter escribira el contenido
      * 
-     * @param csv
-     * @param libros 
+     * @param csv la ruta del csv
+     * @param libros la lista de libros
      */
     public static void toCSV(String csv, List<Libro> libros) {
         PrintWriter es = null;

@@ -248,9 +248,8 @@ public class FromToCsv {
      * csv con su formato estandar de este
      * 
      * Esto lo hara recibiendo una lista de libros del usuario y la ruta del archivo
-     * que sera el nuevo csv, de la ruta cambiara las barras de windows en unas 
-     * reconocibles en caso de tenerlas y mediante un PrintWriter escribira el
-     * contenido
+     * que sera el nuevo csv, de la ruta cambiara las barras en caso de tener contrabarras
+     * en unas reconocibles y mediante un PrintWriter escribira el contenido
      * 
      * @param csv
      * @param libros 

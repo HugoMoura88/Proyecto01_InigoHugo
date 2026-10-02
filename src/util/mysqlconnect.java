@@ -4,11 +4,19 @@ import io.github.cdimascio.dotenv.Dotenv;
 import java.sql.*;
 
 /**
- *
- * @author 2DAM
+ * Clase encargada de realizar la conexión con la base de datos de MySQL 
+ * utilizando los datos del archivo .env.
+ * 
+ * @author InigoHugo
+ * @version 1.0
+
  */
 public class mysqlconnect {
-   
+   /**
+    * 
+    * @return la conexión con MySQL
+    * @throws SQLException si se produce un error al establecer la conexión.
+    */
    public static Connection conectar() throws SQLException {
         Dotenv env = Dotenv.load();
 

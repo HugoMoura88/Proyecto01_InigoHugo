@@ -29,10 +29,10 @@ public class Libro {
     /**
      * Constructor de libro con los siguientes atributos,será usado cuando la id
      * del libro no este disponible.
-     * @param titulo
-     * @param autor
-     * @param precio
-     * @param stock 
+     * @param titulo título del libro
+     * @param autor autor del libro
+     * @param precio precio del libro
+     * @param stock stock cantidad de unidades disponibles
      */
     public Libro(String titulo, String autor, double precio, int stock) {
         this.titulo = titulo;
@@ -42,11 +42,11 @@ public class Libro {
     }
     /**
      *  Constructor de libro con todos los atributos
-     * @param id
-     * @param titulo
-     * @param autor
-     * @param precio
-     * @param stock 
+     * @param id identificador único del libro
+     * @param titulo título del libro
+     * @param autor autor del libro
+     * @param precio precio del libro
+     * @param stock stock cantidad de unidades disponibles
      */
     
 

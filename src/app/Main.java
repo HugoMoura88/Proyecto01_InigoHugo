@@ -16,7 +16,7 @@ public class Main {
    /**
     * Solicita al usuario que seleccione el origen de acceso a los datos 
     * y lo dirige al menu correspondiente.
-    * @param args 
+    * @param args argumentos recibidos desde la línea de comandos
     */
     
     public static void main(String[] args) {

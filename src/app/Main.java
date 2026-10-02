@@ -7,10 +7,17 @@ package app;
 import java.util.Scanner;
 
 /**
- *
- * @author 2DAM
+ * Clase principal en el que se permite al usuario seleccionar el origen de los datos 
+ * que podrá ser mediante fichero CSV o una conexion de mysql.
+ * @author InigoHugo
+ * @version 1.0
  */
 public class Main {
+   /**
+    * Solicita al usuario que seleccione el origen de acceso a los datos 
+    * y lo dirige al menu correspondiente.
+    * @param args 
+    */
     
     public static void main(String[] args) {
         String csv = "";
@@ -36,6 +43,11 @@ public class Main {
                     System.out.println("Opcion no valida");
             }
         }
+    /**
+     * Solicita al usuario la ruta del fichero CSV, luego transformará las barras 
+     * de windows en unas reconocibles.
+     * @param csv ruta del fichero CSV.
+     */
     public static void menuCSV(String csv) {
         Scanner scanner = new Scanner(System.in);
 
@@ -46,7 +58,11 @@ public class Main {
         menu(csv);     
     }
         
-        
+     /**
+      * Muestra al usuario el menu principal de gestion de libros y ejecutará la 
+      * operación seleccionada por el usuario.
+      * @param csv ruta del fichero CSV en caso de no haberlo sera vacio
+      */
         
         
      public static void menu(String csv) {

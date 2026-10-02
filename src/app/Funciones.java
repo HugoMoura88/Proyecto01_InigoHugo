@@ -29,7 +29,7 @@ public class Funciones {
  * con el metodo obtenerTodos, en caso contrario llamara al metodo obtenerTodosTxt del
  * FromToCsv
  * 
- * @param csv 
+ * @param csv ruta del fichero CSV utilizado como origen de datos
  */
     public static void mostrarTodosLosLibros(String csv) {
         Scanner sc = new Scanner(System.in);
@@ -56,7 +56,7 @@ public class Funciones {
  * de obtenerTodos y si algun libro se llama como el indicado lo mostrará por pantalla.
  * Si es por CSV llama al metodo buscarPorTitulo, lo recorre y lo imprime.
  * 
- * @param csv 
+ * @param csv ruta del fichero CSV utilizado como origen de datos
  */
 
     public static void buscarPorTitulo(String csv) {
@@ -120,7 +120,7 @@ public class Funciones {
      * y sino es csv llamará al metodo dao.obtenertodos igualandoló al ArrayList de libros y 
      * lo recorrera y si el precio esta entre esos rangos imprimirá el libro por pantalla.
      * Si es por CSV llama al metodo buscarPorRangoPrecios, lo recorre y lo imprime.
-     * @param csv 
+     * @param csv ruta del fichero CSV utilizado como origen de datos
      */
 
     public static void buscarPorRangoPrecios(String csv) {
@@ -155,7 +155,7 @@ public class Funciones {
      * tipo libros y lo recorrerá con un foreach llamará getstock y si es mayor o
      * igual al introducido por sacnner lo imprimrá.
      * Si es por CSV llama al metodo buscarPorStockMinimo, lo recorre y lo imprime.
-     * @param csv 
+     * @param csv ruta del fichero CSV utilizado como origen de datos
      */
 
     public static void buscarPorStockMinimo(String csv) {
@@ -187,7 +187,7 @@ public class Funciones {
      * primero preguntara al usuario todos los parametros del 
      * libro a introducir, despues llamara respectivamente al metodo del dao
      * o de FromToCsv encargado de insertar el libro
-     * @param csv 
+     * @param csv ruta del fichero CSV utilizado como origen de datos
      */
 
     public static void insertarLibros(String csv) {
@@ -222,7 +222,7 @@ public class Funciones {
  * con ese titulo le preguntara al usuario la id del libro que quiere eliminar
  * y llamara al metodo encargado de eliminarlo por id, si solo hay un libro con
  * ese titulo llamara al metodo de eliminarlo por titulo
- * @param csv 
+ * @param csv ruta del fichero CSV utilizado como origen de datos
  */
     public static void eliminarLibro(String csv) {
         LibroDAO dao = new LibroDAO();
@@ -279,7 +279,7 @@ public class Funciones {
      * sql
      * 
      * 
-     * @param csv 
+     * @param csv ruta del fichero CSV utilizado como origen de datos
      */
      public static void copiar(String csv) {
         Scanner sc = new Scanner(System.in);

@@ -24,7 +24,7 @@ public class LibroDAO implements GenericDAO<Libro> {
      * Este metodo se conectara a mysql mediante la clase util.mysqlconnect.java
      * y ejecutara un insert con los valores del libro introducido
      *
-     * @param objeto
+     * @param objeto libro que introduce el usuario
      * @return true si se ha insertado correctamente y false en lo contrario
      */
     @Override
@@ -87,8 +87,8 @@ public class LibroDAO implements GenericDAO<Libro> {
      * util.mysqlconnect.java y ejecutara un insert con los valores del libro
      * introducido en la tabla introducida
      *
-     * @param objeto
-     * @param tabla
+     * @param objeto libro que introduce el usuario
+     * @param tabla nombre de la tabla
      * @return true si se ha realizado bien y false en lo contrario
      */
     public boolean insertarDeCsv(Libro objeto, String tabla) {
@@ -120,7 +120,7 @@ public class LibroDAO implements GenericDAO<Libro> {
      * Este metodo creara una nueva tabla de libros con el nombre introducido,
      * sera usado para volcar en esta todos los libros de un csv
      *
-     * @param nombre
+     * @param nombre nombre de la tabla
      */
     public void crearTabla(String nombre) {
         try (Connection con = mysqlconnect.conectar(); Statement ps = con.createStatement()) {
@@ -138,7 +138,7 @@ public class LibroDAO implements GenericDAO<Libro> {
      * Este metodo se conectara a mysql mediante la clase util.mysqlconnect.java
      * y ejecutara un DELETE a un libro que tenga el titulo introducido
      *
-     * @param titulo
+     * @param titulo titulo introducido por el usuario
      * @return true si se ha realizado bien y false en lo contrario
      */
     public boolean eliminarPorTitulo(String titulo) {
@@ -160,7 +160,7 @@ public class LibroDAO implements GenericDAO<Libro> {
      * Este metodo se conectara a mysql mediante la clase util.mysqlconnect.java
      * y ejecutara un DELETE a un libro que tenga el id introducido
      * 
-     * @param id
+     * @param id la id del libro introducido por el usuario
      * @return true si se ha realizado bien y false en lo contrario
      */
     public boolean eliminarPorId(String id) {
@@ -182,7 +182,7 @@ public class LibroDAO implements GenericDAO<Libro> {
      * util.mysqlconnect.java y ejecutara una consulta que devolvera el
      * libro de la base de datos que tenga el titulo introducido
      * 
-     * @param titulo
+     * @param titulo el elegido por el usuario
      * @return libro que tenga el titulo introducido
      */
     public Libro obtenerPorTitulo(String titulo) {
@@ -204,7 +204,7 @@ public class LibroDAO implements GenericDAO<Libro> {
      * util.mysqlconnect.java y ejecutara una consulta que devolvera el
      * libro de la base de datos que tenga el autor introducido
      * 
-     * @param autor
+     * @param autor el elegido por el usuario
      * @return libro que tenga el autor introducido
      */
     public Libro obtenerPorAutor(String autor) {
@@ -227,7 +227,7 @@ public class LibroDAO implements GenericDAO<Libro> {
      * en libros traduciendo cada columna de la tabla en su respectivo atributo
      * del libro
      * 
-     * @param rs
+     * @param rs el resultado de la consulta
      * @return libro con todos los atributos traducidos del sql
      * @throws SQLException 
      */

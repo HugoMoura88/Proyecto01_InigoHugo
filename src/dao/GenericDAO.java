@@ -18,7 +18,7 @@ public interface GenericDAO<T> {
     /**
      * Método que nos servirá para insertar libros en este caso a nuestra base 
      * de datos.
-     * @param objeto  que se desea insertar
+     * @param objeto que se desea insertar
      * @return booleano
      */
         boolean insertar(T objeto);

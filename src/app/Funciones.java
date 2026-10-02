@@ -12,12 +12,25 @@ import java.util.Scanner;
 import modelo.Libro;
 
 /**
+ * Esta clase se encargara de contener todos los metodos que usara el main, en
+ * todos sus metodos recibira la variable csv del main, en caso de que el usuario
+ * haya seleccionado csv y haya escrito su ruta el metodo ejecutara otra cosa,
+ * si la variable csv esta vacia significara que el usuario habra seleccionado
+ * mysql por lo que ejecutara otro codigo sirviendo asi cada metodo para sql o csv
+ * seleccionando los metodos de dao.LibroDAO o de util.FromToCsv
  *
- * @author 2DAM
+ * @version 1.0
+ * @author InigoYHugo
  */
 public class Funciones {
-//1. Mostrar todos los libros: mostrará por pantalla todos los libros disponibles en el sistema.
-
+/**
+ * Este metodo se encargara de mostrar por pantalla todos los libros, creara una lista 
+ * de libros y en caso de que el usuario haya elegido sql sacara el contenido del dao
+ * con el metodo obtenerTodos, en caso contrario llamara al metodo obtenerTodosTxt del
+ * FromToCsv
+ * 
+ * @param csv 
+ */
     public static void mostrarTodosLosLibros(String csv) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Libros:");
@@ -139,7 +152,14 @@ public class Funciones {
         sc.nextLine();
         Main.menu(csv);
     }
-//6. Insertar nuevo libro: el usuario proporcionará id, título, autor, precio y stock del nuevo libro.
+
+    /**
+     * Este metodo insetara un nuevo libro en la base de datos,
+     * primero preguntara al usuario todos los parametros del 
+     * libro a introducir, despues llamara respectivamente al metodo del dao
+     * o de FromToCsv encargado de insertar el libro
+     * @param csv 
+     */
 
     public static void insertarLibros(String csv) {
         LibroDAO dao = new LibroDAO();
@@ -166,7 +186,15 @@ public class Funciones {
         Main.menu(csv);
     }
 
-//7. Eliminar libro por título: elimina un libro por su título. Si hay varios con el mismo título, el usuario elige por id.
+/**
+ * Este metodo se encargara de eliminar un libro, primero le preguntara 
+ * al usuario el titulo del libro a eliminar, despues guardara en una lista
+ * todos los libros de la tabla y la recorrera, en caso de haber mas de un libro
+ * con ese titulo le preguntara al usuario la id del libro que quiere eliminar
+ * y llamara al metodo encargado de eliminarlo por id, si solo hay un libro con
+ * ese titulo llamara al metodo de eliminarlo por titulo
+ * @param csv 
+ */
     public static void eliminarLibro(String csv) {
         LibroDAO dao = new LibroDAO();
         List<Libro> libros = new ArrayList<Libro>();
@@ -207,7 +235,23 @@ public class Funciones {
         Main.menu(csv);
     }
 
-//8. Hacer copia: copia todos los datos del repositorio activo al otro (de archivo a MySQL o viceversa).    
+    /**
+     * Este metodo es el encargado de copiar la tabla de sql en un csv o de 
+     * copiar un csv en una nueva tabla sql 
+     * 
+     * En caso de que el usuario haya seleccionado un csv le preguntara a este 
+     * el nombre que quiere para la nueva tabla que se va a crear en su sql y 
+     * creara esta tabla con el metodo del dao crearTabla, despues insertara 
+     * todos sus libros uno a uno en la tabla con el metodo insertarDeCsv
+     * 
+     * En caso de que el usuario haya seleccionado el sql se le preguntara a este
+     * tanto la ruta en el que quiere su csv como el nombre que quiere que tenga,
+     * despues llamara al metodo toCSV para crear el csv con todos los libros del
+     * sql
+     * 
+     * 
+     * @param csv 
+     */
      public static void copiar(String csv) {
         Scanner sc = new Scanner(System.in);
         List<Libro> libros = new ArrayList<Libro>();

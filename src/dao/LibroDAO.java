@@ -177,7 +177,7 @@ public class LibroDAO implements GenericDAO<Libro> {
 
         return false;
     }
-    /*
+    /**
      * Este metodo se conectara a la base de datos mediante la clase
      * util.mysqlconnect.java y ejecutara una consulta que devolvera el
      * libro de la base de datos que tenga el titulo introducido

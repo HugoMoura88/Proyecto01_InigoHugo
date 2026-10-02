@@ -12,13 +12,13 @@ import java.util.List;
  * @author InigoHugo
  * @version 1.0
 
- * @param <T>
+ * @param <T> tipo de objeto que gestionará el DAO
  */
 public interface GenericDAO<T> {
     /**
      * Método que nos servirá para insertar libros en este caso a nuestra base 
      * de datos.
-     * @param objeto
+     * @param objeto  que se desea insertar
      * @return booleano
      */
         boolean insertar(T objeto);

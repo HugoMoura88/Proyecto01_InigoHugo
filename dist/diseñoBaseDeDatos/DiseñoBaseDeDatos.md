@@ -23,30 +23,29 @@ versatil que permita encontrar facilmente cada libro como ver los libros que ha 
 
 | Entidad | Atributos encontrados | Fragmento del texto |
 |---|---|---|
-| Tienda | nombre, direccion, telefono, ciudad | «Cada una tiene su nombre, su dirección, su teléfono y su ciudad» |
-| Editorial | nombre, país, teléfono de contacto | «de cada editorial anotan su nombre, el país y un teléfono de contacto para hacer pedidos» |
-| Libro | SBN, título, año de publicación, número de páginas, precio de catálogo | «Cada libro se identifica por su ISBN (13 cifras), y de cada uno guardan el título, el año de publicación, el número de páginas y el precio de catálogo» |
-| Autor | 	nombre, nacionalidad, año de nacimiento| «De cada autor guardamos el nombre, la nacionalidad y el año de nacimiento» |
-| Empleado | DNI, nombre, apellidos, cargo, fecha de contratación, correo | «el DNI, el nombre y los apellidos, el cargo (…), la fecha de contratación y el correo de trabajo» |
-| Cliente | nombre completo, correo (único), teléfono (opcional), si es socio, fecha de alta | «Los clientes pueden darse de alta como socios» |
-| Pedido | número, fecha, forma de pago, estado| «Tiene una fecha, una forma de pago y un estado» |
-| Inventario | copias, fecha del último recuento | «para cada libro y cada tienda sepa cuántas copias hay, y cuándo se contó por última vez» |
-| Linea | cantidad, precio cobrado | «de cada uno me interesa la cantidad» y «guarde lo que realmente se cobró por cada libro» |
-| Autoria | copias, fecha del último recuento | «distinguir si el autor es principal o colaborador en cada libro» |
+| Tienda | id, nombre, direccion, telefono, ciudad | «Cada una tiene su nombre, su dirección, su teléfono y su ciudad» |
+| Editorial | id, nombre, pais, telefono | «de cada editorial anotan su nombre, el pais y un telefono de contacto para hacer pedidos» |
+| Libro | isbn, titulo, anio_publicacion, num_paginas, precio, editorial_id | «Cada libro se identifica por su ISBN (13 cifras), y de cada uno guardan el titulo, el anio de publicacion, el numero de paginas y el precio de catalogo» |
+| Autor | id, nombre, nacionalidad, anio_nacimiento | «De cada autor guardamos el nombre, la nacionalidad y el anio de nacimiento» |
+| Empleado | dni, nombre, apellidos, cargo, fecha_contratacion, correo, tienda_id | «el DNI, el nombre y los apellidos, el cargo, la fecha de contratacion y el correo de trabajo» |
+| Cliente | id, nombre, correo, telefono, es_socio, fecha_alta | «Los clientes pueden darse de alta como socios» y «nombre y correo» |
+| Pedido | id, fecha, forma_pago, estado, tienda_id, empleado_dni, cliente_id | «Pedido n», «Fecha», «forma de pago y un estado» |
+| inventario (intermedia) | tienda_id, isbn, copias, fecha_recuento | «para cada libro y cada tienda sepa cuantas copias hay, y cuando se conto por ultima vez» |
+| linea_pedido (intermedia) | pedido_id, isbn, cantidad, precio_cobrado | «cada pedido puede llevar varios libros distintos, y de cada uno me interesa la cantidad» y «guarde lo que realmente se cobro» |
+| libro_autor (intermedia) | isbn, autor_id, rol | «distinguir si el autor es principal o colaborador en cada libro» |
 
 ## 2.2 Relaciones
 
 | Relacion | Cardinalidad | Razonamiento |
 |---|---|---|
-| Editorial – Libro | 1:N | Una editorial publica muchos libros, cada libro lo publica una sola editorial |
-| Libro – Autor | N:M | Un libro puede tener dos o tres autores y un autor tiene muchos libros |
-| Tienda – Libro | N:M | Una tienda tiene muchos libros y un mismo libro está en varias tiendas (§1, §3). Se resuelve con Inventario, que guarda copias y fecha del recuento |
-| Tienda – Empleado | 1:N | Una tienda tiene varios empleados; cada empleado trabaja en una sola |
+| Editorial – Libro | 1:N | Una editorial publica muchos libros; un libro lo publica una sola editorial |
+| Libro – Autor | N:M | Un libro puede estar escrito por varios autores y un autor tiene muchos libros. Se resuelve con la tabla intermedia libro_autor (que incluye el rol) |
+| Tienda – Libro | N:M | Una tienda tiene muchos libros en su inventario y un libro esta en varias tiendas. Se resuelve con la tabla intermedia inventario (con copias y fecha_recuento) |
+| Tienda – Empleado | 1:N | Una tienda tiene varios empleados; cada empleado trabaja en una sola tienda |
 | Tienda – Pedido | 1:N | Un pedido se hace siempre en una tienda; una tienda tiene muchos pedidos |
 | Empleado – Pedido | 1:N | Un pedido lo atiende un empleado; un empleado atiende muchos pedidos |
-| Cliente – Pedido | 1:N | Un pedido lo compra un cliente; un cliente hace muchos pedidos |
-| Pedido – Libro | N:M | Un pedido lleva varios libros y un libro está en muchos pedidos |
-| Sala – Sesión | 1:N | En una sala hay muchas sesiones; una sesión es en una sola sala. |
+| Cliente – Pedido | 1:N | Un pedido lo compra un cliente; un cliente puede hacer varios pedidos |
+| Pedido – Libro | N:M | Un pedido lleva varios libros y un libro aparece en muchos pedidos. Se resuelve con la tabla intermedia linea_pedido (con cantidad y precio_cobrado) |
 
 ## 3. Reglas del negocio
 
@@ -66,3 +65,103 @@ versatil que permita encontrar facilmente cada libro como ver los libros que ha 
 14. En cada pedido se guarda el precio que se cobro por cada libro, porque el precio del catalogo puede cambiar
 15. El total del pedido no se guarda porque se puede calcular
 
+## 4.Diagrama Entidad-Relacion
+
+![Diagrama entidad relacion](image.png)
+
+## 5. Modelo logico
+
+### tienda
+| Columna | Clave | Referencia |
+|---|---|---|
+| idtienda | PK | |
+| nombre | | |
+| direccion | | |
+| ciudad | | |
+| telefono | | |
+
+### editorial
+| Columna | Clave | Referencia |
+|---|---|---|
+| ideditorial | PK | |
+| nombre | | |
+| telefono | | |
+| pais | | |
+
+### autor
+| Columna | Clave | Referencia |
+|---|---|---|
+| idautor | PK | |
+| nombre | | |
+| nacionalidad | | |
+| anio_nacimienot | | |
+
+### libro
+| Columna | Clave | Referencia |
+|---|---|---|
+| isbn | PK | |
+| titulo | | |
+| anio_publicacion | | |
+| paginas | | |
+| precio_ratalogo | | |
+| id_editorial | FK | editorial.ideditorial |
+
+### cliente
+| Columna | Clave | Referencia |
+|---|---|---|
+| idcliente | PK | |
+| nombre_completo | | |
+| email | | |
+| telefono | | |
+
+### empleado
+| Columna | Clave | Referencia |
+|---|---|---|
+| dni | PK | |
+| nombre | | |
+| apellidos | | |
+| email | | |
+| cargo | | |
+| fecha_contratacion | | |
+| id_tienda | FK | tienda.idtienda |
+
+### pedido
+| Columna | Clave | Referencia |
+|---|---|---|
+| id_pedido | PK | |
+| fecha | | |
+| forma_pago | | |
+| estado | | |
+| id_cliente | FK | cliente.idcliente |
+| dni_empleado | FK | empleado.dni |
+| id_tienda | FK | tienda.idtienda |
+
+### detalle_pedido (intermedia)
+| Columna | Clave | Referencia |
+|---|---|---|
+| id_pedido | PK, FK | pedido.id_pedido |
+| isbn | PK, FK | libro.isbn |
+| cantidad | | |
+| precio_unitario | | |
+
+### socio
+| Columna | Clave | Referencia |
+|---|---|---|
+| id_socio | PK | |
+| id_cliente | FK | cliente.idcliente |
+| fecha_alta | | |
+
+### inventario
+| Columna | Clave | Referencia |
+|---|---|---|
+| isbn | PK, FK | libro.isbn |
+| id_tienda | PK, FK | tienda.idtienda |
+| cantidad | | |
+| fecha_ultimo_conteo | | |
+
+### libro_autor (intermedia)
+| Columna | Clave | Referencia |
+|---|---|---|
+| isbn | PK, FK | libro.isbn |
+| id_autor | PK, FK | autor.idautor |
+| rol | | |

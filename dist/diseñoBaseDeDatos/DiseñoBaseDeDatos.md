@@ -165,3 +165,315 @@ versatil que permita encontrar facilmente cada libro como ver los libros que ha 
 | isbn | PK, FK | libro.isbn |
 | id_autor | PK, FK | autor.idautor |
 | rol | | |
+
+## 6. Script SQL ejecutable
+
+CREATE DATABASE libreria; 
+USE libreria;
+
+CREATE TABLE `libreria`.`editorial` (
+  `ideditorial` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(100) NOT NULL,
+  `telefono` VARCHAR(45) NULL,
+  `pais` VARCHAR(45) NULL,
+  PRIMARY KEY (`ideditorial`));
+
+CREATE TABLE `libreria`.`autor` (
+  `idautor` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(100) NOT NULL,
+  `nacionalidad` VARCHAR(45) NULL,
+  `anio_nacimienot` INT NULL,
+  PRIMARY KEY (`idautor`));
+
+CREATE TABLE `libreria`.`cliente` (
+  `idcliente` INT NOT NULL AUTO_INCREMENT,
+  `nombre_completo` VARCHAR(100) NOT NULL,
+  `email` VARCHAR(100) NULL,
+  `telefono` VARCHAR(45) NULL,
+  PRIMARY KEY (`idcliente`));
+
+CREATE TABLE `libreria`.`tienda` (
+  `idtienda` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(100) NOT NULL,
+  `direccion` VARCHAR(150) NULL,
+  `ciudad` VARCHAR(45) NULL,
+  `telefono` VARCHAR(45) NULL,
+  PRIMARY KEY (`idtienda`));
+
+CREATE TABLE `libreria`.`libro` (
+  `isbn` INT NOT NULL AUTO_INCREMENT,
+  `titulo` VARCHAR(200) NOT NULL,
+  `anio_publicacion` INT NULL,
+  `paginas` INT NULL,
+  `precio_catalogo` DECIMAL(10,2) NOT NULL,
+  `id_editorial` INT NOT NULL,
+  PRIMARY KEY (`isbn`),
+  INDEX `fk_id_editorial_idx` (`id_editorial` ASC) VISIBLE,
+  CONSTRAINT `fk_id_editorial`
+    FOREIGN KEY (`id_editorial`)
+    REFERENCES `libreria`.`editorial` (`ideditorial`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE TABLE `libreria`.`empleado` (
+  `dni` VARCHAR(20) NOT NULL,
+  `nombre` VARCHAR(100) NOT NULL,
+  `apellidos` VARCHAR(150) NOT NULL,
+  `email` VARCHAR(100) NULL,
+  `cargo` VARCHAR(45) NULL,
+  `fecha_contratacion` DATETIME NULL,
+  `id_tienda` INT NOT NULL,
+  PRIMARY KEY (`dni`),
+  INDEX `fk_id_tienda_idx` (`id_tienda` ASC) VISIBLE,
+  CONSTRAINT `fk_id_tienda`
+    FOREIGN KEY (`id_tienda`)
+    REFERENCES `libreria`.`tienda` (`idtienda`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE TABLE `libreria`.`libro_autor` (
+  `isbn` INT NOT NULL,
+  `id_autor` INT NOT NULL,
+  `rol` VARCHAR(50) NULL,
+
+  PRIMARY KEY (`isbn`, `id_autor`),
+
+  INDEX `fk_isbn_libro_idx` (`isbn` ASC) VISIBLE,
+  INDEX `fk_id_autor_idx` (`id_autor` ASC) VISIBLE,
+
+  CONSTRAINT `fk_isbn_libro`
+    FOREIGN KEY (`isbn`)
+    REFERENCES `libreria`.`libro` (`isbn`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+
+  CONSTRAINT `fk_id_autor`
+    FOREIGN KEY (`id_autor`)
+    REFERENCES `libreria`.`autor` (`idautor`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+);
+
+CREATE TABLE `libreria`.`inventario` (
+  `isbn` INT NOT NULL,
+  `id_tienda` INT NOT NULL,
+  `cantidad` INT NOT NULL,
+  `fecha_ultimo_conteo` DATE NULL,
+
+  PRIMARY KEY (`isbn`, `id_tienda`),
+
+  INDEX `fk_inventario_libro_idx` (`isbn` ASC) VISIBLE,
+  INDEX `fk_inventario_tienda_idx` (`id_tienda` ASC) VISIBLE,
+
+  CONSTRAINT `fk_inventario_libro`
+    FOREIGN KEY (`isbn`)
+    REFERENCES `libreria`.`libro` (`isbn`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+
+  CONSTRAINT `fk_inventario_tienda`
+    FOREIGN KEY (`id_tienda`)
+    REFERENCES `libreria`.`tienda` (`idtienda`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+
+
+);
+CREATE TABLE `libreria`.`socio` (
+  `id_socio` INT NOT NULL AUTO_INCREMENT,
+  `id_cliente` INT NOT NULL,
+  `fecha_alta` DATE NOT NULL,
+
+  PRIMARY KEY (`id_socio`),
+
+  UNIQUE INDEX `id_cliente_UNIQUE` (`id_cliente` ASC) VISIBLE,
+  INDEX `fk_socio_cliente_idx` (`id_cliente` ASC) VISIBLE,
+
+  CONSTRAINT `fk_socio_cliente`
+    FOREIGN KEY (`id_cliente`)
+    REFERENCES `libreria`.`cliente` (`idcliente`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+);
+
+
+
+CREATE TABLE `libreria`.`pedido` (
+  `id_pedido` INT NOT NULL AUTO_INCREMENT,
+  `fecha` DATETIME NOT NULL,
+  `forma_pago` VARCHAR(50) NULL,
+  `estado` VARCHAR(50) NULL,
+  `id_cliente` INT NOT NULL,
+  `dni_empleado` VARCHAR(20) NOT NULL,
+  `id_tienda` INT NOT NULL,
+
+  PRIMARY KEY (`id_pedido`),
+
+  INDEX `fk_pedido_cliente_idx` (`id_cliente` ASC) VISIBLE,
+  INDEX `fk_pedido_empleado_idx` (`dni_empleado` ASC) VISIBLE,
+  INDEX `fk_pedido_tienda_idx` (`id_tienda` ASC) VISIBLE,
+
+  CONSTRAINT `fk_pedido_cliente`
+    FOREIGN KEY (`id_cliente`)
+    REFERENCES `libreria`.`cliente` (`idcliente`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+
+  CONSTRAINT `fk_pedido_empleado`
+    FOREIGN KEY (`dni_empleado`)
+    REFERENCES `libreria`.`empleado` (`dni`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+
+  CONSTRAINT `fk_pedido_tienda`
+    FOREIGN KEY (`id_tienda`)
+    REFERENCES `libreria`.`tienda` (`idtienda`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+);
+
+CREATE TABLE `libreria`.`detalle_pedido` (
+  `id_pedido` INT NOT NULL,
+  `isbn` INT NOT NULL,
+  `cantidad` INT NOT NULL,
+  `precio_unitario` DECIMAL(10,2) NOT NULL,
+
+  PRIMARY KEY (`id_pedido`, `isbn`),
+
+  INDEX `fk_detalle_pedido_pedido_idx` (`id_pedido` ASC) VISIBLE,
+  INDEX `fk_detalle_pedido_libro_idx` (`isbn` ASC) VISIBLE,
+
+  CONSTRAINT `fk_detalle_pedido_pedido`
+    FOREIGN KEY (`id_pedido`)
+    REFERENCES `libreria`.`pedido` (`id_pedido`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+
+  CONSTRAINT `fk_detalle_pedido_libro`
+    FOREIGN KEY (`isbn`)
+    REFERENCES `libreria`.`libro` (`isbn`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+);
+
+## 7. Diccionario de datos
+
+### tienda
+| Columna | Tipo | Obligatorio | Descripcion |
+|---|---|:---:|---|
+| idtienda | INT | Si | Id de la tienda |
+| nombre | VARCHAR(100) | Si | Nombre comercial |
+| direccion | VARCHAR(150) | Si | Direccion del local |
+| ciudad | VARCHAR(45) | Si | Ciudad |
+| telefono | VARCHAR(45) | No | Telefono de contacto |
+
+### editorial
+| Columna | Tipo | Obligatorio | Descripcion |
+|---|---|:---:|---|
+| ideditorial | INT | Si | Id de la editorial |
+| nombre | VARCHAR(100) | Si | Nombre oficial |
+| telefono | VARCHAR(45) | No | Telefono |
+| pais | VARCHAR(45) | Si | Pais de origen |
+
+### autor
+| Columna | Tipo | Obligatorio | Descripcion |
+|---|---|:---:|---|
+| idautor | INT | Si | Id del autor |
+| nombre | VARCHAR(100) | Si | Nombre completo |
+| nacionalidad | VARCHAR(45) | No | Nacionalidad |
+| anio_nacimienot | INT | No | Anio de nacimiento |
+
+### libro
+| Columna | Tipo | Obligatorio | Descripcion |
+|---|---|:---:|---|
+| isbn | INT | Si | Codigo ISBN del libro |
+| titulo | VARCHAR(200) | Si | Titulo |
+| anio_publicacion | INT | No | Anio de publicacion |
+| paginas | INT | No | Numero de paginas |
+| prerin_ratalogo | DECIMAL(10,2) | Si | Precio oficial |
+| id_editorial | INT | Si | Editorial que lo publica |
+
+### cliente
+| Columna | Tipo | Obligatorio | Descripcion |
+|---|---|:---:|---|
+| idcliente | INT | Si | Id del cliente |
+| nombre_completo | VARCHAR(100) | Si | Nombre y apellidos |
+| email | VARCHAR(100) | Si | Correo electronico |
+| telefono | VARCHAR(45) | No | Telefono |
+
+### empleado
+| Columna | Tipo | Obligatorio | Descripcion |
+|---|---|:---:|---|
+| dni | VARCHAR(20) | Si | DNI del empleado |
+| nombre | VARCHAR(100) | Si | Nombre |
+| apellidos | VARCHAR(150) | Si | Apellidos |
+| email | VARCHAR(100) | Si | Correo |
+| cargo | VARCHAR(45) | Si | Puesto de trabajo |
+| fecha_contratacion | DATETIME | Si | Fecha de alta |
+| id_tienda | INT | Si | Tienda donde trabaja |
+
+### pedido
+| Columna | Tipo | Obligatorio | Descripcion |
+|---|---|:---:|---|
+| id_pedido | INT | Si | Id del pedido |
+| fecha | DATETIME | Si | Fecha y hora |
+| forma_pago | VARCHAR(50) | Si | Metodo de pago |
+| estado | VARCHAR(50) | Si | Estado actual |
+| id_cliente | INT | Si | Cliente comprador |
+| dni_empleado | VARCHAR(20) | Si | Empleado que atiende |
+| id_tienda | INT | Si | Tienda de la venta |
+
+### detalle_pedido
+| Columna | Tipo | Obligatorio | Descripcion |
+|---|---|:---:|---|
+| id_pedido | INT | Si | Pedido asociado |
+| isbn | INT | Si | Libro comprado |
+| cantidad | INT | Si | Unidades |
+| precio_unitario | DECIMAL(10,2) | Si | Precio real cobrado |
+
+### socio
+| Columna | Tipo | Obligatorio | Descripcion |
+|---|---|:---:|---|
+| id_socio | INT | Si | Id de socio |
+| id_cliente | INT | Si | Cliente vinculado |
+| fecha_alta | DATETIME | Si | Fecha de alta como socio |
+
+### inventario
+| Columna | Tipo | Obligatorio | Descripcion |
+|---|---|:---:|---|
+| isbn | INT | Si | Libro en stock |
+| id_tienda | INT | Si | Tienda del stock |
+| cantidad | INT | Si | Copias disponibles |
+| fecha_ultimo_conteo | DATETIME | Si | Fecha del recuento |
+
+### libro_autor
+| Columna | Tipo | Obligatorio | Descripcion |
+|---|---|:---:|---|
+| isbn | INT | Si | Libro |
+| id_autor | INT | Si | Autor |
+| rol | VARCHAR(50) | No | Rol en la obra |
+
+
+
+## 8. Decisiones de diseño
+
+### 1. Guardar el precio unitario en el detalle del pedido
+- **Que se decidio:** Meter la columna precio_unitario en la tabla detalle_pedido
+- **Por que:** Si suben los precios de los libros con el tiempo no queremos que los pedidos viejos cambien de precio y dejen de cuadrar
+- **Alternativa descartada:** Coger el precio siempre de la tabla libro
+
+### 2. Poner los socios en otra tabla
+- **Que se decidio:** Crear una tabla socio conectada a cliente
+- **Por que:** No todos compran siendo socios y asi no se llena la tabla de datos vacios
+- **Alternativa descartada:** Meter las columnas de socio dentro de la tabla cliente y ya
+
+### 3. El stock por cada tienda
+- **Que se decidio:** Hacer la tabla inventario entre tienda y libro con las copias y la fecha
+- **Por que:** Cada local tiene sus propios libros y hay que saber cuantas copias quedan en cada sitio
+- **Alternativa descartada:** Poner una columna de stock dentro del propio libro
+
+### 4. Tabla intermedia para los autores
+- **Que se decidio:** Usar libro_autor para unir libros y autores con un campo para el rol
+- **Por que:** Un libro puede tener varios autores y asi sabemos quien es el principal o si hace un prologo
+- **Alternativa descartada:** Escribir el autor a mano en una columna de texto en la tabla libro
+

@@ -477,3 +477,95 @@ CREATE TABLE `libreria`.`detalle_pedido` (
 - **Por que:** Un libro puede tener varios autores y asi sabemos quien es el principal o si hace un prologo
 - **Alternativa descartada:** Escribir el autor a mano en una columna de texto en la tabla libro
 
+## 9. Datos de prueba
+
+INSERT INTO tienda (idtienda, nombre, direccion, ciudad, telefono) VALUES 
+(1, 'Centro', 'Calle Mayor 10', 'Zaragoza', '976111222'),
+(2, 'Ribera', 'Paseo Ebro 5', 'Aldeaverde', '976333444'),
+(3, 'Universidad', 'Plaza San Francisco 3', 'Zaragoza', '976555666');
+
+INSERT INTO editorial (ideditorial, nombre, telefono, pais) VALUES 
+(1, 'Alfaguara', '910000111', 'Espana'),
+(2, 'Alianza', '910000222', 'Espana'),
+(3, 'Plaza y Janes', '910000333', 'Espana');
+
+INSERT INTO autor (idautor, nombre, nacionalidad, anio_nacimienot) VALUES 
+(1, 'Julio Cortazar', 'Argentina', 1914),
+(2, 'Jorge Luis Borges', 'Argentina', 1899),
+(3, 'Isabel Allende', 'Chilena', 1942);
+
+INSERT INTO libro (isbn, titulo, anio_publicacion, paginas, prerin_ratalogo, id_editorial) VALUES 
+(1111111111111, 'Rayuela', 1963, 600, 16.50, 1),
+(2222222222222, 'Ficciones', 1944, 200, 12.00, 2),
+(3333333333333, 'Cuentos de Eva Luna', 1989, 350, 14.90, 3),
+(4444444444444, 'Antologia del cuento', 2010, 450, 18.00, 2);
+
+INSERT INTO cliente (idcliente, nombre_completo, email, telefono) VALUES 
+(1, 'Andres Perez', 'andres.p@correo.es', '600112233'),
+(2, 'Maria Gomez', 'maria.g@correo.es', '600445566'),
+(3, 'Luis Ruiz', 'luis.r@correo.es', '600778899');
+
+INSERT INTO empleado (dni, nombre, apellidos, email, cargo, fecha_contratacion, id_tienda) VALUES 
+('11111111A', 'Marta', 'Lopez', 'marta.l@libreria.es', 'cajera', '2023-01-15', 1),
+('22222222B', 'Carlos', 'Sanz', 'carlos.s@libreria.es', 'librero', '2022-05-20', 2),
+('33333333C', 'Ana', 'Torres', 'ana.t@libreria.es', 'encargada', '2020-10-01', 3);
+
+INSERT INTO pedido (id_pedido, fecha, forma_pago, estado, id_cliente, dni_empleado, id_tienda) VALUES 
+(101, '2026-03-12 10:30:00', 'tarjeta', 'entregado', 1, '11111111A', 1),
+(102, '2026-03-12 11:15:00', 'efectivo', 'preparado', 2, '22222222B', 2),
+(103, '2026-03-13 12:00:00', 'bizum', 'entregado', 3, '33333333C', 3);
+
+INSERT INTO detalle_pedido (id_pedido, isbn, cantidad, precio_unitario) VALUES 
+(101, 1111111111111, 1, 16.50),
+(101, 2222222222222, 2, 12.00),
+(102, 3333333333333, 1, 14.90),
+(103, 4444444444444, 1, 18.00);
+
+INSERT INTO inventario (isbn, id_tienda, cantidad, fecha_ultimo_conteo) VALUES 
+(1111111111111, 1, 4, '2026-03-02'),
+(2222222222222, 1, 2, '2026-03-02'),
+(3333333333333, 2, 0, '2026-03-02'),
+(4444444444444, 3, 6, '2026-02-28');
+
+## 10. Consultas principales (SQL)
+
+### 1. Consultar el stock de un libro en una tienda especifica
+sql
+SELECT l.titulo, i.cantidad, i.fecha_ultimo_conteo 
+FROM inventario i 
+JOIN libro l ON i.isbn = l.isbn 
+WHERE i.id_tienda = 1 AND i.isbn = 9788437604923;
+
+
+### 2. Ver los libros escritos por un autor determinado
+sql
+SELECT l.titulo, l.anio_publicacion, la.rol 
+FROM libro_autor la 
+JOIN libro l ON la.isbn = l.isbn 
+WHERE la.id_autor = 5;
+
+
+### 3. Listar los pedidos realizados por un cliente concreto
+sql
+SELECT p.id_pedido, p.fecha, p.forma_pago, p.estado, p.id_tienda 
+FROM pedido p 
+WHERE p.id_cliente = 12 
+ORDER BY p.fecha DESC;
+
+
+### 4. Calcular el importe total de un pedido sumando sus lineas
+sql
+SELECT id_pedido, SUM(cantidad * precio_unitario) AS total_pedido 
+FROM detalle_pedido 
+WHERE id_pedido = 3 
+GROUP BY id_pedido;
+
+
+## 11. Conclusiones y proximos pasos
+
+El diseño de la base de datos relacional para la libreria Paginas de Villa Serena resuelve los problemas iniciales de desorganizacion que tenian con las hojas de calculo compartidas. Con este modelo estructurado conseguimos:
+- Centralizar el control de stock de forma independiente para cada tienda fisica mediante la tabla inventario
+- Garantizar la integridad historica de las ventas guardando el precio unitario exacto en el momento de la transaccion
+- Mantener una gestion limpia de autores, editoriales y clientes socios sin duplicidades
+
+Como proximos pasos, se valorara la creacion de vistas para facilitar los reportes de ventas mensuales, la implementacion de procedimientos almacenados para la gestion automatizada de devoluciones y la creacion de copias de seguridad periodicas en el servidor de la empresa.

@@ -15,3 +15,13 @@ la fecha de alta y opcionalmente el telefono. Elena tambien tiene problemas con 
 
 En resumen Elena quiere una base de datos centralizada que permita reflejar correctamente el inventario de cada tienda, que tenga un catalogo de libros
 versatil que permita encontrar facilmente cada libro como ver los libros que ha escrito cada autor tanto si es el principal como colaborador  
+
+## 2. Analisis del caso
+
+
+
+
+
+
+## 4. Diagrama entidad relacion
+![Esquema entidad relacion](entidadRelacion.png)
